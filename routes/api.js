@@ -186,7 +186,7 @@ router.post('/ingreso', async (req, res) => {
     const { token } = req.body;
 
     // Validar que sea un UUID valido
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!token || !uuidRegex.test(token)) {
       return res.status(400).json({
         success: false,
