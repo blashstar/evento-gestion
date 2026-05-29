@@ -81,6 +81,13 @@
         maxLength: 'Especialidad no puede exceder 100 caracteres',
       },
     },
+    acepta_terminos: {
+      required: true,
+      isCheckbox: true,
+      messages: {
+        required: 'Debes aceptar los Términos de Servicio y la Política de Privacidad',
+      },
+    },
   };
 
   const API_ENDPOINT = '/api/registro';
@@ -149,6 +156,13 @@
    * @returns {ValidationResult}
    */
   const validateFieldValue = (value, config) => {
+    if (config.isCheckbox) {
+      if (config.required && !value) {
+        return { valid: false, error: config.messages.required };
+      }
+      return { valid: true };
+    }
+
     const trimmed = value.trim();
 
     if (config.required && !trimmed) {
@@ -277,9 +291,14 @@
       eachKey(this._rules, (fieldName) => {
         const input = this._getInput(fieldName);
         if (!input) return;
+        const config = this._rules[fieldName];
 
-        input.addEventListener('blur', () => this.validateField(fieldName));
-        input.addEventListener('input', () => this._errorRenderer.clear(fieldName));
+        if (config.isCheckbox) {
+          input.addEventListener('change', () => this.validateField(fieldName));
+        } else {
+          input.addEventListener('blur', () => this.validateField(fieldName));
+          input.addEventListener('input', () => this._errorRenderer.clear(fieldName));
+        }
       });
     }
 
@@ -291,7 +310,8 @@
     validateField(fieldName) {
       const config = this._rules[fieldName];
       const input = this._getInput(fieldName);
-      const result = validateFieldValue(input.value, config);
+      const rawValue = config.isCheckbox ? input.checked : input.value;
+      const result = validateFieldValue(rawValue, config);
 
       if (result.valid) {
         this._errorRenderer.markValid(fieldName);

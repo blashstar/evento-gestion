@@ -28,12 +28,12 @@
 
             <form id="datos" class="formulario">
                 <div class="campo">
-                    <label for="nombre">Nombre completo</label>
+                    <label for="nombre">Nombres y Apellidos</label>
                     <input
                         type="text"
                         id="nombre"
                         name="nombre"
-                        placeholder="Nombre completo"
+                        placeholder="Nombres y Apellidos"
                         autocomplete="name"
                         required
                     >
@@ -88,6 +88,20 @@
                         placeholder="Especialidad"
                         required
                     >
+                    <span class="mensaje error-message"></span>
+                </div>
+
+                <div class="campo campo-checkbox">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="acepta_terminos" id="acepta_terminos">
+                        <span class="checkmark"></span>
+                        <span class="checkbox-text">
+                            Al registrarte aceptas nuestros
+                            <a href="/terminos" target="_blank">Términos de Servicio</a>
+                            y
+                            <a href="/privacidad" target="_blank">Política de Privacidad</a>
+                        </span>
+                    </label>
                     <span class="mensaje error-message"></span>
                 </div>
 
