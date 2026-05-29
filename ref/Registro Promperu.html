@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<!-- saved from url=(0066)https://cdpn.io/pen/debug/dPpmadQ/a04dd4f7852a7c779969fae5b43a935d -->
+<html lang="en"><script src="chrome-extension://fopaemeedckajflibkpifppcankfmbhk/detector.js" type="module"></script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  
+  <meta name="robots" content="noindex">
+  
+  
+
+  <title>Registro Promperu</title>
+
+    <link rel="canonical" href="https://codepen.io/blashstar/pen/dPpmadQ/a04dd4f7852a7c779969fae5b43a935d">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" href="./Registro Promperu_files/modern-normalize.min.css">
+  
+<style>
+:root {
+  --rojo: #da291c;
+}
+@font-face {
+  font-family: 'BreePeru';
+  src: url("https://assets.codepen.io/89352/BreePeru-Bold.woff2") format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'BreePeru';
+  src: url("https://assets.codepen.io/89352/BreePeru-Regular.woff2") format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'BreePeru';
+  src: url("https://assets.codepen.io/89352/BreePeru-Light.woff2") format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+body {
+  min-height: 100vh;
+  font-family: 'BreePeru';
+  font-weight: 300;
+}
+#pagina {
+  background-color: var(--rojo);
+  color: #fff;
+  min-height: 100vh;
+  padding: 0;
+  background-image: url("https://assets.codepen.io/89352/trama.png");
+  background-position: center bottom;
+  background-repeat: repeat-x;
+  background-size: auto 25%;
+  display: flex;
+  flex-direction: column;
+}
+.capsula {
+  color: var(--rojo);
+  background-color: #fff;
+  display: inline-block;
+  line-height: 0.9;
+  font-weight: bold;
+  font-size: 1.3rem;
+  padding: 0.4em 0.75em 0.2em;
+  border-radius: 2em;
+}
+@media only screen and (min-width: 992px) {
+  .capsula {
+    font-size: 1.5rem;
+  }
+}
+#encabezado {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  width: 100%;
+}
+@media only screen and (min-width: 992px) {
+  #encabezado {
+    -webkit-padding-before: 2rem;
+            padding-block-start: 2rem;
+    max-width: 85rem;
+    margin-inline: auto;
+    justify-content: end;
+    padding-inline: 4rem;
+  }
+}
+#encabezado .logo {
+  width: 30vw;
+}
+@media only screen and (min-width: 768px) {
+  #encabezado .logo {
+    width: 20vw;
+  }
+}
+@media only screen and (min-width: 992px) {
+  #encabezado .logo {
+    width: clamp(5rem, 100%, 8rem);
+  }
+}
+#principal {
+  padding: 1rem 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex: 1 1 100%;
+  box-sizing: border-box;
+}
+@media only screen and (min-width: 768px) {
+  #principal {
+    padding-inline: 3rem;
+  }
+}
+@media only screen and (min-width: 992px) {
+  #principal {
+    max-width: 85rem;
+    margin-inline: auto;
+    display: grid;
+    grid-template-areas: 'titular registro' 'info registro';
+    grid-template-columns: 5fr 7fr;
+    grid-template-rows: auto auto;
+    gap: 2rem 4rem;
+    align-content: center;
+    padding: 1rem 4rem 2rem;
+  }
+}
+#titular {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+@media only screen and (min-width: 992px) {
+  #titular {
+    align-items: flex-start;
+    grid-area: titular;
+    text-align: left;
+  }
+}
+#titular h1 {
+  font-size: 1.5rem;
+  text-wrap: balance;
+  margin-block: 0;
+}
+@media only screen and (min-width: 992px) {
+  #titular h1 {
+    font-size: 2.5rem;
+  }
+}
+#titular h1 strong {
+  font-size: 1.75em;
+  display: block;
+}
+@media only screen and (min-width: 768px) {
+  #titular h1 strong {
+    font-size: 1.6em;
+  }
+}
+@media only screen and (min-width: 992px) {
+  #titular h1 strong {
+    font-size: 1.3em;
+  }
+}
+#titular p {
+  font-size: 1.25rem;
+  margin-block: 0;
+  line-height: 1.3;
+}
+@media only screen and (min-width: 992px) {
+  #titular p {
+    font-size: 1.75rem;
+    max-width: 35ch;
+  }
+}
+#titular p strong {
+  font-weight: bold;
+  display: inline-block;
+}
+#registro {
+  background-color: #f0f0f0;
+  border: 2px solid #fff;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0.5rem 1.5rem 0.2rem rgba(0,0,0,0.251);
+  color: #464646;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  -webkit-margin-after: 1rem;
+          margin-block-end: 1rem;
+}
+@media only screen and (min-width: 768px) {
+  #registro {
+    padding: 2rem 4rem;
+  }
+}
+@media only screen and (min-width: 992px) {
+  #registro {
+    grid-area: registro;
+    align-self: start;
+    padding: 2rem 3rem;
+  }
+}
+#registro p {
+  font-size: 1.2rem;
+  text-wrap: balance;
+  text-align: center;
+  margin: 0;
+}
+@media only screen and (min-width: 992px) {
+  #registro p {
+    font-size: 1.5rem;
+    text-align: left;
+  }
+}
+#registro .nota {
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
+  text-wrap: balance;
+}
+@media only screen and (min-width: 992px) {
+  #registro .nota {
+    font-size: 1.25rem;
+    text-align: left;
+  }
+}
+.icono {
+  width: 1.5rem;
+  aspect-ratio: 1;
+  -o-object-fit: contain;
+     object-fit: contain;
+  display: inline-block;
+  vertical-align: baseline;
+}
+#datos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#datos .campo {
+  position: relative;
+  display: flex;
+}
+#datos .icono {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+}
+#datos input {
+  width: 100%;
+  padding: 1rem 1.5rem 1rem 3.5rem;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  font-size: 1.25rem;
+  font-weight: 300;
+  outline: none;
+  transition: all 0.3s ease;
+}
+#datos input:focus {
+  border-color: #e63939;
+  box-shadow: 0 0 0 3px rgba(230,57,57,0.1);
+}
+#datos button {
+  width: 100%;
+  background-color: var(--rojo);
+  color: #fff;
+  border: none;
+  padding: 0.5em;
+  font-size: 1.5rem;
+  font-weight: normal;
+  line-height: 1;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+@media only screen and (min-width: 992px) {
+  #info {
+    grid-area: info;
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+#info .capsula {
+  -webkit-margin-after: 0.5rem;
+          margin-block-end: 0.5rem;
+}
+#info .item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.75rem;
+}
+@media only screen and (min-width: 992px) {
+  #info .item {
+    font-size: 2.25rem;
+  }
+}
+#info .item strong {
+  font-weight: normal;
+}
+#info .item strong,
+#info .item span {
+  display: inline-block;
+}
+#pie {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #b81f14;
+  padding: 1.5rem 2rem;
+  gap: 1.5rem;
+}
+@media only screen and (min-width: 992px) {
+  #pie {
+    padding: 1.25rem 2rem;
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+#pie .promperu {
+  flex: 0 0 auto;
+  width: 9rem;
+  height: auto;
+}
+@media only screen and (min-width: 992px) {
+  #pie .promperu {
+    width: 6.5rem;
+  }
+}
+#pie p {
+  font-weight: 300;
+  text-wrap: balance;
+  font-size: 1.25rem;
+  text-align: center;
+  margin: 0;
+}
+@media only screen and (min-width: 992px) {
+  #pie p {
+    font-size: 1.5rem;
+    text-align: left;
+  }
+}
+</style>
+
+  
+  
+  
+</head>
+
+<body>
+  <div id="pagina">
+  <header id="encabezado"><img class="logo" src="./Registro Promperu_files/peru-logo.png"></header>
+  <main id="principal">
+    <hgroup id="titular">
+      <div class="capsula">EVENTO</div>
+      <h1>Lanzamiento del <strong>Asistente Virtual</strong> de Viajes con IA</h1>
+      <p>Una herramienta innovadora de <strong>Peru Travel</strong> para descubrir el Perú con itinerarios personalizados.</p>
+    </hgroup>
+    <aside id="registro">
+      <p>Completa tus datos para registrarte en el evento y para recibir tu entrada QR.</p>
+      <form id="datos">
+        <div class="campo"><img class="icono" src="./Registro Promperu_files/usuario.png">
+          <input type="text" name="nombres" placeholder="Nombres" required="required">
+        </div>
+        <div class="campo"><img class="icono" src="./Registro Promperu_files/usuario.png">
+          <input type="text" name="apellidos" placeholder="Apellidos" required="required">
+        </div>
+        <div class="campo"><img class="icono" src="./Registro Promperu_files/correo.png">
+          <input type="email" name="correo" placeholder="Correo" required="required">
+        </div>
+        <div class="campo"><img class="icono" src="./Registro Promperu_files/empresa.png">
+          <input type="text" name="empresa" placeholder="Empresa / Institución" required="required">
+        </div>
+        <button type="submit">Registrarme</button>
+      </form>
+      <div class="nota">*Se enviará un código QR para que puedas ingresar al evento.</div>
+    </aside>
+    <article id="info">
+      <div class="capsula">Te esperamos en:</div>
+      <div class="item"><img class="icono" src="./Registro Promperu_files/lugar.png"><strong>Museo Larco Herrera</strong></div>
+      <div class="item"><img class="icono" src="./Registro Promperu_files/fecha.png"><span>7 de Abril de 2026</span></div>
+      <div class="item"><img class="icono" src="./Registro Promperu_files/hora.png"><span>9:30 - 11:30 AM</span></div>
+    </article>
+  </main>
+  <footer id="pie"><img class="promperu" src="./Registro Promperu_files/promperu-logo.png">
+    <p>Comisión de Promoción del Perú para la Exportación y el Turismo</p>
+  </footer>
+</div>
+  
+  
+  
+
+
+
+</body></html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es" class="has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login - Admin Evento Deferol</title>
+
+  <!-- Local Vendor CSS -->
+  <link rel="stylesheet" href="/vendor/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/vendor/css/admin-one.min.css">
+
+  <style>
+    :root {
+      --primary-color: #1a1a2e;
+      --accent-color: #e94560;
+    }
+    
+    html, body {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+      padding: 2rem;
+    }
+    
+    .login-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+    
+    .login-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #16213e 100%);
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .login-header h1 {
+      color: white;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    
+    .login-header p {
+      color: rgba(255,255,255,0.8);
+      margin: 0.5rem 0 0;
+    }
+    
+    .login-body {
+      padding: 2rem;
+    }
+    
+    .login-header .icon {
+      font-size: 3rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    
+    .input:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+    }
+    
+    .button.is-primary {
+      background: linear-gradient(135deg, var(--accent-color) 0%, #c13558 100%);
+      border: none;
+      font-weight: 600;
+    }
+    
+    .button.is-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
+    }
+    
+    .notification {
+      display: none;
+    }
+    
+    .notification.is-visible {
+      display: block;
+    }
+    
+    .help.is-danger {
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <span class="icon">
+            <i class="mdi mdi-shield-lock"></i>
+          </span>
+          <h1>Deferol</h1>
+          <p>Panel de Administración</p>
+        </div>
+        
+        <div class="login-body">
+          <div id="error-notification" class="notification is-danger is-light">
+            <button type="button" class="delete" id="error-dismiss"></button>
+            <span id="error-message">Credenciales inválidas</span>
+          </div>
+
+          <form id="login-form">
+            <input type="hidden" id="csrf-token" name="_csrf">
+            
+            <div class="field">
+              <label class="label">Correo electrónico</label>
+              <div class="control has-icons-left has-icons-right">
+                <input 
+                  class="input" 
+                  type="email" 
+                  name="correo" 
+                  placeholder="admin@deferol.gob.pe" 
+                  required
+                >
+                <span class="icon is-left">
+                  <i class="mdi mdi-email"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Contraseña</label>
+              <div class="control has-icons-left has-icons-right">
+                <input 
+                  class="input" 
+                  type="password" 
+                  name="password" 
+                  placeholder="••••••••" 
+                  required
+                >
+                <span class="icon is-left">
+                  <i class="mdi mdi-lock"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <button 
+                  type="submit"
+                  class="button is-primary is-fullwidth"
+                  id="login-button"
+                >
+                  <span class="icon"><i class="mdi mdi-login"></i></span>
+                  <span>Iniciar Sesión</span>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="has-text-centered mt-4">
+            <a href="/" class="button is-text">
+              <span class="icon"><i class="mdi mdi-arrow-left"></i></span>
+              <span>Volver al inicio</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Local Vendor JS -->
+  <script src="/vendor/js/admin-one.min.js"></script>
+
+  <script>
+    // Obtener token CSRF de la cookie
+    function getCsrfToken() {
+      const name = 'XSRF-TOKEN=';
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return '';
+    }
+
+    // Función para obtener CSRF de la API
+    async function fetchCsrfToken() {
+      try {
+        const response = await fetch('/adm/csrf-token');
+        const data = await response.json();
+        if (data.csrfToken) {
+          document.getElementById('csrf-token').value = data.csrfToken;
+        }
+      } catch (error) {
+        console.error('Error fetching CSRF token:', error);
+      }
+    }
+
+    // Inicializar CSRF token desde cookie o API
+    (function initCsrf() {
+      const initialCsrfToken = getCsrfToken();
+      if (initialCsrfToken) {
+        document.getElementById('csrf-token').value = initialCsrfToken;
+      } else {
+        fetchCsrfToken();
+      }
+    })();
+
+    // Event listeners
+    const form = document.getElementById('login-form');
+    const errorNotification = document.getElementById('error-notification');
+    const errorMessage = document.getElementById('error-message');
+    const loginButton = document.getElementById('login-button');
+    const errorDismiss = document.getElementById('error-dismiss');
+
+    // Cerrar notificación de error
+    errorDismiss.addEventListener('click', function() {
+      errorNotification.classList.remove('is-visible');
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Reset UI
+      errorNotification.classList.remove('is-visible');
+      loginButton.classList.add('is-loading');
+      loginButton.disabled = true;
+
+      const formData = new FormData(form);
+      const datos = {
+        correo: formData.get('correo'),
+        password: formData.get('password'),
+        _csrf: formData.get('_csrf')
+      };
+
+      try {
+        const response = await fetch('/adm/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': document.getElementById('csrf-token').value
+          },
+          body: JSON.stringify(datos)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Guardar token y CSRF en localStorage
+          localStorage.setItem('adminToken', result.data.token);
+          localStorage.setItem('adminUsuario', JSON.stringify(result.data.usuario));
+          localStorage.setItem('csrfToken', result.csrfToken);
+          
+          // Redireccionar al dashboard
+          window.location.href = '/adm/';
+        } else {
+          // Mostrar error
+          errorMessage.textContent = result.error || 'Credenciales inválidas';
+          errorNotification.classList.add('is-visible');
+        }
+      } catch (error) {
+        errorMessage.textContent = 'Error de conexión. Intente nuevamente.';
+        errorNotification.classList.add('is-visible');
+      } finally {
+        loginButton.classList.remove('is-loading');
+        loginButton.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+/* ============================================
+   ESTILOS COMUNES - DEFEROL EVENTO
+   Variables, fuentes y estilos base
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+/* Variables globales */
+:root {
+  --azul: #2563eb;
+  --azul-oscuro: #1e40af;
+}
+
+/* ============================================
+   ESTILOS BASE
+   ============================================ */
+
+body {
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-weight: 300;
+}
+
+#pagina {
+  background-color: var(--azul);
+  color: #fff;
+  min-height: 100vh;
+  padding: 0;
+  background-image: url("/img/trama.png");
+  background-position: center bottom;
+  background-repeat: repeat-x;
+  background-size: auto 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   ELEMENTOS COMPARTIDOS
+   ============================================ */
+
+.capsula {
+  color: var(--azul);
+  background-color: #fff;
+  display: inline-block;
+  line-height: 0.9;
+  font-weight: bold;
+  font-size: 1.3rem;
+  padding: 0.4em 0.75em 0.2em;
+  border-radius: 2em;
+}
+
+@media only screen and (min-width: 992px) {
+  .capsula {
+    font-size: 1.5rem;
+  }
+}
+
+.icono {
+  width: 1.5rem;
+  aspect-ratio: 1;
+  -o-object-fit: contain;
+     object-fit: contain;
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+/* ============================================
+   ENCABEZADO
+   ============================================ */
+
+#encabezado {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@media only screen and (min-width: 992px) {
+  #encabezado {
+    -webkit-padding-before: 2rem;
+            padding-block-start: 2rem;
+    max-width: 85rem;
+    margin-inline: auto;
+    justify-content: end;
+    padding-inline: 4rem;
+  }
+}
+
+#encabezado .logo {
+  width: 30vw;
+}
+
+@media only screen and (min-width: 768px) {
+  #encabezado .logo {
+    width: 20vw;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  #encabezado .logo {
+    width: clamp(5rem, 100%, 8rem);
+  }
+}
+
+/* ============================================
+   CONTENIDO PRINCIPAL
+   ============================================ */
+
+#principal {
+  padding: 1rem 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex: 1 1 100%;
+  box-sizing: border-box;
+}
+
+@media only screen and (min-width: 768px) {
+  #principal {
+    padding-inline: 3rem;
+  }
+}
+
+/* ============================================
+   TITULAR
+   ============================================ */
+
+#titular {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+@media only screen and (min-width: 992px) {
+  #titular {
+    align-items: flex-start;
+    grid-area: titular;
+    text-align: left;
+  }
+}
+
+#titular h1 {
+  font-size: 1.5rem;
+  text-wrap: balance;
+  margin-block: 0;
+}
+
+@media only screen and (min-width: 992px) {
+  #titular h1 {
+    font-size: 2.5rem;
+  }
+}
+
+#titular h1 strong {
+  font-size: 1.75em;
+  display: block;
+}
+
+@media only screen and (min-width: 768px) {
+  #titular h1 strong {
+    font-size: 1.6em;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  #titular h1 strong {
+    font-size: 1.3em;
+  }
+}
+
+#titular p {
+  font-size: 1.25rem;
+  margin-block: 0;
+  line-height: 1.3;
+}
+
+@media only screen and (min-width: 992px) {
+  #titular p {
+    font-size: 1.75rem;
+    max-width: 35ch;
+  }
+}
+
+#titular p strong {
+  font-weight: bold;
+  display: inline-block;
+}
+
+/* ============================================
+   INFORMACION DEL EVENTO
+   ============================================ */
+
+#info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+@media only screen and (min-width: 992px) {
+  #info {
+    grid-area: info;
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+#info .capsula {
+  -webkit-margin-after: 0.5rem;
+          margin-block-end: 0.5rem;
+}
+
+#info .item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.75rem;
+}
+
+@media only screen and (min-width: 992px) {
+  #info .item {
+    font-size: 2.25rem;
+  }
+}
+
+#info .item strong {
+  font-weight: normal;
+}
+
+#info .item strong,
+#info .item span {
+  display: inline-block;
+}
+
+/* ============================================
+   PIE DE PAGINA
+   ============================================ */
+
+#pie {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--azul-oscuro);
+  padding: 1.5rem 2rem;
+  gap: 1.5rem;
+}
+
+@media only screen and (min-width: 992px) {
+  #pie {
+    padding: 1.25rem 2rem;
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+
+#pie .deferol-logo {
+  flex: 0 0 auto;
+  width: 9rem;
+  height: auto;
+}
+
+@media only screen and (min-width: 992px) {
+  #pie .deferol-logo {
+    width: 6.5rem;
+  }
+}
+
+#pie p {
+  font-weight: 300;
+  text-wrap: balance;
+  font-size: 1.25rem;
+  text-align: center;
+  margin: 0;
+}
+
+@media only screen and (min-width: 992px) {
+  #pie p {
+    font-size: 1.5rem;
+    text-align: left;
+  }
+}
+
+.oculto{
+  display: none;
+  transform: scale(0);
+  visibility: hidden;
+}
+
+#pagina .oculto {
+  display: none;
+  transform: scale(0);
+  visibility: hidden;
+}
+
+#pagina .oculto > * {
+  display: none;
+}

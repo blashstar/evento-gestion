@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Validación de Ingreso - Deferol</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/3.0.1/modern-normalize.min.css">
+  <link rel="stylesheet" href="/estilos/comunes.css">
+  <link rel="stylesheet" href="/estilos/validacion.css">
+  <script src="/js/html5-qrcode.min.js"></script>
+</head>
+<body>
+  <div id="pagina">
+    <header id="encabezado">
+      <img class="logo" src="/img/marca-logo.png" alt="Logo Deferol">
+    </header>
+    <main id="principal">
+      <hgroup id="titular">
+        <div class="capsula">CONTROL DE INGRESO</div>
+        <!-- <h1>Validación de <strong>Código QR</strong></h1>
+        <p>Escanea el código QR del asistente para registrar su ingreso al evento.</p> -->
+      </hgroup>
+      <aside id="escaner">
+        <div id="lector-qr"></div>
+        <div id="estado-escaneo" class="estado-inactivo">
+          <span class="icono-estado">📷</span>
+          <p>Esperando escaneo...</p>
+        </div>
+      </aside>
+       <article id="resultado" class="oculto">
+         <div id="resultado-contenido"></div>
+         <button id="btn-nuevo-escaneo" class="btn-accion">Escanear otro QR</button>
+       </article>
+    </main>
+    <footer id="pie">
+      <img class="deferol" src="/img/deferol-logo.png" alt="Logo Deferol">
+      <p>Deferol - Soluciones Digitales</p>
+    </footer>
+  </div>
+  <script src="/js/validacion.js"></script>
+</body>
+</html>

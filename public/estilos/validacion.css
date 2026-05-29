@@ -1,0 +1,197 @@
+/* ============================================
+   ESTILOS PAGINA VALIDACION - KIOSKO VERTICAL
+   Todos los elementos en columna vertical
+   ============================================ */
+
+#encabezado {
+  justify-content: center;
+}
+
+#titular {
+  align-items: center;
+}
+
+
+/* Escaner de QR */
+#escaner {
+  background-color: #f0f0f0;
+  border: 2px solid #fff;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0.5rem 1.5rem 0.2rem rgba(0,0,0,0.251);
+  color: #464646;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 1rem;
+}
+
+#lector-qr {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #000;
+}
+
+#lector-qr video {
+  border-radius: 1rem;
+}
+
+/* Estado de escaneo */
+#estado-escaneo {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.estado-inactivo {
+  background-color: #e0e0e0;
+  color: #666;
+}
+
+.estado-escaneando {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.estado-valido {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.estado-invalido {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.estado-duplicado {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.icono-estado {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Resultado */
+#resultado {
+  background-color: #f0f0f0;
+  border: 2px solid #fff;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0.5rem 1.5rem 0.2rem rgba(0,0,0,0.251);
+  color: #464646;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 1rem;
+  transition: all 0.3s ease;
+}
+
+.resultado-valido {
+  border-color: #28a745;
+  background-color: #d4edda;
+}
+
+.resultado-invalido {
+  border-color: #dc3545;
+  background-color: #f8d7da;
+}
+
+.resultado-duplicado {
+  border-color: #ffc107;
+  background-color: #fff3cd;
+}
+
+#resultado-contenido {
+  text-align: center;
+}
+
+#resultado-contenido h2 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+}
+
+#resultado-contenido .datos-asistente {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}
+
+#resultado-contenido .datos-asistente strong {
+  display: block;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#resultado-contenido .empresa {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0.5rem 0;
+}
+
+#resultado-contenido .hora-ingreso {
+  font-size: 1rem;
+  color: #888;
+  margin-top: 1rem;
+}
+
+/* Override html5-qrcode styles for better fit */
+#reader__dashboard_section_csr button {
+  background-color: #2563eb !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 0.5rem !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+}
+
+#reader__dashboard_section_csr select {
+  padding: 0.5rem !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid #ddd !important;
+  font-size: 1rem !important;
+}
+
+#reader__scan_region {
+  min-height: 300px !important;
+}
+
+#reader {
+  width: 100% !important;
+  border: none !important;
+}
+
+#reader__dashboard_section_swaplink {
+   display: none !important;
+ }
+
+/* Estilos para el botón de nuevo escaneo */
+.btn-accion {
+   background-color: #007bff;
+   color: white;
+   border: none;
+   padding: 0.75rem 1.5rem;
+   border-radius: 0.5rem;
+   font-size: 1rem;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+}
+
+.btn-accion:hover {
+   background-color: #0056b3;
+}
+
+.btn-accion:active {
+   background-color: #004085;
+}

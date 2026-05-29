@@ -1,0 +1,24 @@
+# ESLint ignore patterns
+
+# Node modules
+node_modules/
+
+# Docker data
+data/
+
+# Test results
+test-results/
+
+# Coverage
+coverage/
+
+# Playwright reports
+playwright-report/
+
+# Third-party libraries (minified files)
+public/js/html5-qrcode.min.js
+public/vendor/
+
+# temp files
+*.temp.js
+*.tmp.js

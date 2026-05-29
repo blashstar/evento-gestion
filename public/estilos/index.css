@@ -1,0 +1,26 @@
+/* ============================================
+   ESTILOS PAGINA INDEX - LANDING
+   Layout especifico: titular + info lado a lado
+   ============================================ */
+
+@media only screen and (min-width: 992px) {
+  #principal {
+    max-width: 85rem;
+    margin-inline: auto;
+    display: grid;
+    grid-template-areas: 'titular info';
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+    gap: 2rem 4rem;
+    align-content: center;
+    padding: 1rem 4rem 2rem;
+  }
+
+  #titular {
+    grid-area: titular;
+  }
+
+  #info {
+    grid-area: info;
+  }
+}

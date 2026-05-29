@@ -1,0 +1,14 @@
+node_modules/
+.env
+*.log
+.DS_Store
+coverage/
+.nyc_output/
+uploads/
+*.swp
+*.swo
+.idea/
+.vscode/
+data/
+playwright-report/
+test-results/
