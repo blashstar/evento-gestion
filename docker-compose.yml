@@ -10,7 +10,7 @@ services:
     ports:
       - '${DB_PORT}:3306'
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     networks:
       - evento_net
     healthcheck:
@@ -61,6 +61,10 @@ services:
       timeout: 3s
       start_period: 40s
       retries: 3
+
+volumes:
+  mysql_data:
+    driver: local
 
 networks:
   evento_net:
