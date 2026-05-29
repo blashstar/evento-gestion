@@ -1,10 +1,14 @@
+/**
+ * Funcionalidad del formulario de registro
+ * Evento Deferol
+ */
+
 document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('datos');
   const registroAside = document.getElementById('registro');
-  const submitBtn = form.querySelector('button[type="submit"]');
-  const nota = registroAside.querySelector('.nota');
+  const submitBtn = document.querySelector('.botones .boton');
 
-  // Validation rules matching Asistente model constraints
+  // Validación de campos según el modelo Asistente
   const validators = {
     nombre: {
       required: true,
@@ -60,78 +64,71 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  // Add error message containers to each field
-  Object.keys(validators).forEach(function(fieldName) {
-    const input = form.querySelector('[name="' + fieldName + '"]');
-    if (!input) return;
-    
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.style.cssText = 'color: #2563eb; font-size: 0.85rem; margin-top: 0.25rem; display: none;';
-    input.parentNode.appendChild(errorDiv);
-
-    // Real-time validation on blur
-    input.addEventListener('blur', function() {
-      validateField(fieldName);
-    });
-
-    // Clear error on input
-    input.addEventListener('input', function() {
-      clearFieldError(fieldName);
-    });
-  });
-
+  // Validar campo individual
   function validateField(fieldName) {
     const input = form.querySelector('[name="' + fieldName + '"]');
+    const campo = input.closest('.campo');
     const rules = validators[fieldName];
     const value = input.value.trim();
 
-    // Required check
+    // Limpiar error previo
+    clearFieldError(fieldName);
+
+    // Validar requerido
     if (rules.required && !value) {
       showFieldError(fieldName, rules.messages.required);
       return false;
     }
 
-    // Min length check
+    // Validar longitud mínima
     if (rules.minLength && value.length < rules.minLength) {
       showFieldError(fieldName, rules.messages.minLength);
       return false;
     }
 
-    // Max length check
+    // Validar longitud máxima
     if (rules.maxLength && value.length > rules.maxLength) {
       showFieldError(fieldName, rules.messages.maxLength);
       return false;
     }
 
-    // Pattern check
+    // Validar patrón
     if (rules.pattern && !rules.pattern.test(value)) {
       showFieldError(fieldName, rules.messages.pattern);
       return false;
     }
 
-    clearFieldError(fieldName);
+    // Campo válido
+    campo.classList.remove('error');
+    campo.classList.add('valid');
     return true;
   }
 
+  // Mostrar error en el campo
   function showFieldError(fieldName, message) {
     const input = form.querySelector('[name="' + fieldName + '"]');
-    const errorDiv = input.parentNode.querySelector('.error-message');
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
-    input.style.borderColor = '#2563eb';
+    const campo = input.closest('.campo');
+    const messageSpan = campo.querySelector('.mensaje');
+    
+    campo.classList.add('error');
+    campo.classList.remove('valid');
+    messageSpan.textContent = message;
     input.setAttribute('aria-invalid', 'true');
   }
 
+  // Limpiar error del campo
   function clearFieldError(fieldName) {
     const input = form.querySelector('[name="' + fieldName + '"]');
-    const errorDiv = input.parentNode.querySelector('.error-message');
-    errorDiv.textContent = '';
-    errorDiv.style.display = 'none';
-    input.style.borderColor = '#ddd';
+    const campo = input.closest('.campo');
+    const messageSpan = campo.querySelector('.mensaje');
+    
+    campo.classList.remove('error');
+    campo.classList.remove('valid');
+    messageSpan.textContent = '';
     input.removeAttribute('aria-invalid');
   }
 
+  // Validar todo el formulario
   function validateForm() {
     let isValid = true;
     Object.keys(validators).forEach(function(fieldName) {
@@ -142,17 +139,38 @@ document.addEventListener('DOMContentLoaded', function() {
     return isValid;
   }
 
-  // Form submission
+  // Validación en tiempo real al salir del campo
+  Object.keys(validators).forEach(function(fieldName) {
+    const input = form.querySelector('[name="' + fieldName + '"]');
+    if (!input) return;
+
+    // Validar al salir del campo
+    input.addEventListener('blur', function() {
+      validateField(fieldName);
+    });
+
+    // Limpiar error al escribir
+    input.addEventListener('input', function() {
+      clearFieldError(fieldName);
+    });
+  });
+
+  // Manejo del envío del formulario
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
     if (!validateForm()) {
+      // Scroll al primer error
+      const firstError = form.querySelector('.campo.error');
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
       return;
     }
 
-    // Disable submit button and show loading
+    // Mostrar loading en el botón
+    submitBtn.classList.add('loading');
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Registrando...';
 
     const formData = {
       nombre: form.querySelector('[name="nombre"]').value.trim(),
@@ -174,68 +192,80 @@ document.addEventListener('DOMContentLoaded', function() {
       const result = await response.json();
 
       if (!response.ok) {
-        // Handle validation errors from server
+        // Manejar errores de validación del servidor
         if (result.errores && result.errores.length > 0) {
           result.errores.forEach(function(error) {
             if (validators[error.campo]) {
               showFieldError(error.campo, error.mensaje);
             }
           });
+          // Scroll al primer error
+          const firstError = form.querySelector('.campo.error');
+          if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         } else {
           alert('Error: ' + (result.error || 'Error al registrar'));
         }
         return;
       }
 
-      // Success - show QR code
+      // Éxito - mostrar QR
       showQRSuccess(result.data);
 
     } catch (error) {
       console.error('Error al enviar formulario:', error);
       alert('Error de conexión. Por favor, intenta nuevamente.');
     } finally {
+      submitBtn.classList.remove('loading');
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Registrarme';
     }
   });
 
+  // Mostrar sección de éxito con QR
   function showQRSuccess(data) {
-    // Hide form and show QR
+    // Ocultar formulario
     form.style.display = 'none';
-    if (nota) nota.style.display = 'none';
 
+    // Crear sección de éxito
     const qrSection = document.createElement('div');
     qrSection.id = 'qr-success';
-    qrSection.style.cssText = 'text-align: center; padding: 1rem 0;';
     qrSection.innerHTML = `
-      <div style="background: #fff; border-radius: 1rem; padding: 2rem; box-shadow: 0 0.5rem 1.5rem 0.2rem rgba(0,0,0,0.1);">
-        <h2 style="color: #2563eb; margin: 0 0 1rem; font-size: 1.5rem;">¡Registro Exitoso!</h2>
-        <p style="color: #666; margin: 0 0 0.5rem;">${data.nombre}</p>
-        <p style="color: #666; margin: 0 0 1.5rem; font-size: 0.9rem; text-align: center;">${data.correo}</p>
-        <div style="margin: 1.5rem auto; display: block;">
-          <img id="qr-image" src="${data.qrCodigo}" alt="Código QR de acceso" style="width: 70%; display: block; margin: 0 auto; border: 2px solid #eee; padding: 10px; border-radius: 8px;">
-        </div>
-        <div style="display: flex; gap: 1rem; justify-content: center; margin: 1.5rem 0;">
-          <button id="btn-download" style="background: #2563eb; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 0.5rem; cursor: pointer; font-size: 1rem; font-weight: bold; transition: background 0.3s;">
-            📥 Descargar QR
-          </button>
-          <button id="btn-share" style="background: #333; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 0.5rem; cursor: pointer; font-size: 1rem; font-weight: bold; transition: background 0.3s;">
-            📤 Compartir
-          </button>
-        </div>
-        <p style="color: #666; font-size: 0.9rem; margin: 1rem 0;">
-          Se ha enviado una copia de este QR a tu correo electrónico.
-        </p>
-        <p style="color: #666; font-size: 0.85rem; margin: 0.5rem 0;">
-          Presenta este código QR en la entrada del evento.
-        </p>
+      <h2>¡Registro Exitoso!</h2>
+      <p>${data.nombre}</p>
+      <p>${data.correo}</p>
+      
+      <div class="qr-container">
+        <img id="qr-image" src="${data.qrCodigo}" alt="Código QR de acceso">
       </div>
+      
+      <div class="buttons">
+        <button id="btn-download">
+          📥 Descargar QR
+        </button>
+        <button id="btn-share">
+          📤 Compartir
+        </button>
+      </div>
+      
+      <p class="qr-info">Se ha enviado una copia de este QR a tu correo electrónico.</p>
+      <p class="qr-info">Presenta este código QR en la entrada del evento.</p>
     `;
 
-    registroAside.insertBefore(qrSection, registroAside.firstChild);
-    registroAside.querySelector('p').style.display = 'none';
+    // Insertar antes del title
+    const title = registroAside.querySelector('h2');
+    registroAside.insertBefore(qrSection, title.nextSibling);
+    
+    // Eliminar el título y descripción
+    if (title) {
+      title.style.display = 'none';
+    }
+    const description = registroAside.querySelector('p');
+    if (description && !description.classList.contains('qr-info')) {
+      description.style.display = 'none';
+    }
 
-    // Download button handler
+    // Evento para descargar QR
     document.getElementById('btn-download').addEventListener('click', function() {
       const qrImg = document.getElementById('qr-image');
       const link = document.createElement('a');
@@ -246,12 +276,13 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.removeChild(link);
     });
 
-    // Share button handler using Web Share API
+    // Evento para compartir QR
     document.getElementById('btn-share').addEventListener('click', async function() {
+      const qrImg = document.getElementById('qr-image');
+
       if (navigator.share && navigator.canShare) {
         try {
-          const qrImg = document.getElementById('qr-image');
-          // Convert data URL to Blob directly (no fetch needed, avoids CSP issues)
+          // Convertir data URL a Blob
           const parts = qrImg.src.split(',');
           const byteString = atob(parts[1]);
           const mimeString = parts[0].split(':')[1].split(';')[0];
@@ -262,6 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
           const blob = new Blob([ab], { type: mimeString });
           const file = new File([blob], 'qr-evento-Deferol.png', { type: 'image/png' });
+
           if (navigator.canShare({ files: [file] })) {
             await navigator.share({
               title: 'QR Evento Deferol',

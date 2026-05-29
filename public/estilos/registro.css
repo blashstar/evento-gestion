@@ -1,253 +1,386 @@
 /* ============================================
-   CONTENIDO PRINCIPAL
+   FUENTE Y VARIABLES
    ============================================ */
+@import url("https://fonts.googleapis.com/css2?family=Arimo:wght@400..700&display=swap");
+
+:root {
+  --rojo: #a70000;
+  --rojo-oscuro: #460705;
+  --azul: #2563eb;
+}
+
+/* ============================================
+   RESET Y BASE
+   ============================================ */
+figure {
+  margin: 0;
+}
+
+figure img {
+  display: block;
+  max-width: 100%;
+}
+
+body {
+  background-color: var(--rojo-oscuro);
+  color: #fff;
+}
+
+/* ============================================
+   CONTENEDOR PRINCIPAL
+   ============================================ */
+#pagina {
+  height: 100vh;
+  min-height: 100dvh;
+  padding: 1rem;
+  font-family: 'Arimo', sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+@media only screen and (min-width: 768px) {
+  #pagina {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+  }
+}
 
 @media only screen and (min-width: 992px) {
-  #principal {
-    max-width: 85rem;
+  #pagina {
+    grid-template-columns: 1fr 1fr;
+    max-width: 1200px;
     margin-inline: auto;
-    display: grid;
-    grid-template-areas: 'titular registro' 'info registro';
-    grid-template-columns: 5fr 7fr;
-    grid-template-rows: auto auto;
-    gap: 2rem 4rem;
-    align-content: center;
-    padding: 1rem 4rem 2rem;
   }
 }
 
 /* ============================================
-   ESTILOS ESPECIFICOS - REGISTRO (FORMULARIO)
+   ENCABEZADO CON LOGOS
    ============================================ */
-
-/* Contenedor de registro */
-#registro {
-  background-color: var(--rojo);
-  color: #fff;
-  padding: 2rem;
-  border-radius: 1.5rem;
+#encabezado {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  margin-block-end: 1rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+#encabezado .logo-deferol {
+  width: 180px;
+  max-width: 100%;
 }
 
 @media only screen and (min-width: 768px) {
-  #registro {
-    padding: 2.5rem;
+  #encabezado .logo-deferol {
+    width: 100%;
   }
 }
 
 @media only screen and (min-width: 992px) {
-  #registro {
-    grid-area: registro;
-    align-self: start;
-    padding: 2.5rem 3rem;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+  #encabezado .logo-deferol {
+    width: auto;
+  }
+}
+
+#encabezado .logos-bajos {
+  width: 300px;
+  max-width: 100%;
+  margin-top: 1rem;
+  opacity: 0.8;
+}
+
+@media only screen and (min-width: 768px) {
+  #encabezado .logos-bajos {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  #encabezado .logos-bajos {
+    width: auto;
+  }
+}
+
+/* ============================================
+   ASIDE DE REGISTRO
+   ============================================ */
+#registro {
+  background-color: var(--rojo);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+#registro h2 {
+  line-height: 1;
+  margin: 0;
+  font-size: 1.5rem;
+  color: #fff;
+  text-align: center;
+}
+
+@media only screen and (min-width: 768px) {
+  #registro h2 {
+    text-align: left;
   }
 }
 
 #registro p {
-  font-size: 1.2rem;
-  text-wrap: balance;
-  text-align: center;
+  line-height: 1.4;
   margin: 0;
-  line-height: 1.6;
-}
-
-@media only screen and (min-width: 992px) {
-  #registro p {
-    font-size: 1.5rem;
-    text-align: left;
-  }
-}
-
-#registro .nota {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   text-align: center;
-  text-wrap: balance;
-  font-style: italic;
-  margin-top: 0.5rem;
+  font-size: 1rem;
 }
 
-@media only screen and (min-width: 992px) {
-  #registro .nota {
-    font-size: 1.1rem;
+@media only screen and (min-width: 768px) {
+  #registro p {
     text-align: left;
+    font-size: 1.1rem;
   }
 }
 
 /* ============================================
-   FORMULARIO DE DATOS
+   FORMULARIO
    ============================================ */
-
-#datos {
+.formulario {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-}
-
-#datos .campo {
-  position: relative;
-  display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 1rem;
 }
 
-#datos .icono {
-  position: absolute;
-  top: 50%;
-  left: 1.25rem;
-  transform: translateY(-50%);
-  width: 2rem;
-  height: 2rem;
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
+.campo {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
 }
 
-#datos .campo:focus-within .icono {
-  opacity: 1;
+.campo label {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #fff;
 }
 
-#datos input {
-  width: 100%;
-  padding: 1rem 1.5rem 1rem 4rem;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 1rem;
-  font-size: 1.15rem;
-  font-weight: 300;
+.campo input {
+  height: 2.5rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  font-size: 1rem;
   color: #333;
   background-color: #fff;
-  outline: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-#datos input::placeholder {
+.campo input::placeholder {
   color: #999;
   font-weight: 300;
 }
 
-#datos input:focus {
+.campo input:focus {
+  outline: none;
   border-color: var(--azul);
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
-  transform: translateY(-2px);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
-#datos input:hover {
-  border-color: rgba(255, 255, 255, 0.5);
+.campo input:hover {
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
-#datos input:-webkit-autofill,
-#datos input:-webkit-autofill:hover,
-#datos input:-webkit-autofill:focus {
+.campo input:-webkit-autofill,
+.campo input:-webkit-autofill:hover,
+.campo input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 1000px white inset !important;
   -webkit-text-fill-color: #333 !important;
 }
 
-/* Boton de registro */
-#datos button {
-  width: 100%;
-  background-color: var(--azul);
-  color: #fff;
-  border: none;
-  padding: 1rem 1.5rem;
-  font-size: 1.35rem;
-  font-weight: 600;
-  line-height: 1;
-  border-radius: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
-}
-
-#datos button:hover {
-  background-color: var(--azul-oscuro, #2557c3);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
-}
-
-#datos button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
-}
-
-#datos button:focus {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.4);
-}
-
-/* Mensajes de error */
-.error-message {
-  color: #d97706;
-  font-size: 0.95rem;
-  margin-top: 0.25rem;
-  padding-left: 3.5rem;
-  display: none;
-  animation: shake 0.4s ease-in-out;
-}
-
-.error-message.visible {
-  display: block;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-3px); }
-  40%, 80% { transform: translateX(3px); }
-}
-
-/* Campo con error */
-#datos .campo.error input {
+.campo input[aria-invalid="true"] {
   border-color: #d97706 !important;
   background-color: #fef2f2;
 }
 
-#datos .campo.error .icono {
-  opacity: 1;
-  filter: brightness(0.8);
-}
-
-#datos .campo.valid input {
+.campo input.valid {
   border-color: #22c55e !important;
 }
 
-#datos .campo.valid .icono {
-  opacity: 1;
-  filter: none;
+/* Mensajes de error */
+.campo .mensaje {
+  font-size: 0.85rem;
+  color: #d97706;
+  min-height: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.campo .mensaje:empty {
+  display: none;
+}
+
+.campo .error-message {
+  font-size: 0.85rem;
+  color: #d97706;
+  min-height: 1.2rem;
+  display: none;
+}
+
+.campo .error-message:not(:empty) {
+  display: block;
 }
 
 /* ============================================
-   SECCION QR EXITOSO
+   BOTONES
    ============================================ */
+.botones {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
 
+@media only screen and (min-width: 768px) {
+  .botones {
+    justify-content: flex-end;
+  }
+}
+
+.botones button {
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.botones .boton {
+  background-color: #fff;
+  color: var(--rojo-oscuro);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.botones .boton:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.botones .boton:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.botones .boton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Boton con loading */
+.botones .boton .button-loading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.botones .boton .button-text {
+  transition: opacity 0.3s ease;
+}
+
+.botones .boton.loading .button-text {
+  opacity: 0;
+}
+
+.botones .boton.loading .button-loading {
+  display: flex;
+}
+
+/* Spinner */
+.botones .spinner {
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+.botones circle {
+  stroke: var(--rojo-oscuro);
+  stroke-width: 4;
+  fill: none;
+  stroke-linecap: round;
+  animation: spin 1s linear infinite;
+}
+
+/* ============================================
+   SECCIÓN QR EXITOSO
+   ============================================ */
 #qr-success {
   text-align: center;
-  padding: 2rem 1rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  backdrop-filter: blur(5px);
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+  animation: fadeIn 0.6s ease-out;
+}
+
+#qr-success h2 {
+  color: var(--azul);
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+#qr-success p {
+  color: #666;
+  margin: 0 0 1rem;
+}
+
+#qr-success .qr-container {
+  margin: 1.5rem auto;
+  display: block;
+  max-width: 300px;
+  width: 100%;
 }
 
 #qr-success img {
-  max-width: 400px;
   width: 100%;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  max-width: 300px;
+  border: 2px solid #eee;
   padding: 15px;
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: block;
+  margin: 0 auto;
 }
 
-#qr-success button {
-  margin-top: 1.5rem;
+#qr-success .buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+#qr-success .buttons button {
+  background-color: var(--azul);
+  color: #fff;
   border: none;
-  padding: 0.75rem 2rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
@@ -255,16 +388,29 @@
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-#qr-success button:hover {
+#qr-success .buttons button:hover {
   opacity: 0.9;
   transform: translateY(-2px);
 }
 
-/* Estilos para la transicion de exeito */
-#qr-success {
-  animation: fadeIn 0.6s ease-out;
+#qr-success .qr-info {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+/* ============================================
+   ANIMACIONES
+   ============================================ */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes fadeIn {
@@ -278,95 +424,73 @@
   }
 }
 
-/* ============================================
-   RESPONSIVE ADJUSTMENTS
-   ============================================ */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-3px); }
+  40%, 80% { transform: translateX(3px); }
+}
 
-@media only screen and (max-width: 767px) {
-  #principal {
+.error-message.shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media only screen and (max-width: 480px) {
+  #pagina {
     padding: 1rem;
   }
-
+  
+  #encabezado {
+    margin-bottom: 1rem;
+  }
+  
   #registro {
-    padding: 1.5rem;
+    padding: 1rem;
   }
-
-  #datos input {
-    font-size: 1.1rem;
-    padding: 0.9rem 1.25rem 0.9rem 3.75rem;
+  
+  #registro h2 {
+    font-size: 1.3rem;
   }
-
-  #datos button {
-    font-size: 1.2rem;
-    padding: 0.9rem 1.25rem;
+  
+  #registro p {
+    font-size: 0.95rem;
   }
-
-  #registro .nota {
-    font-size: 0.9rem;
+  
+  .campo input {
+    font-size: 0.95rem;
+    padding: 0.75rem 0.75rem;
+  }
+  
+  .botones .boton {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .botones {
+    justify-content: center !important;
+  }
+  
+  #qr-success .buttons {
+    flex-direction: column;
+  }
+  
+  #qr-success .buttons button {
+    width: 100%;
   }
 }
 
-/* Focus visible para accesibilidad */
-#datos input:focus-visible,
-#datos button:focus-visible {
+/* ============================================
+   ACCESIBILIDAD
+   ============================================ */
+.campo input:focus-visible {
   outline: 2px solid var(--azul);
   outline-offset: 2px;
 }
 
-/* Estilo para el logo en el formulario */
-#titular {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-@media only screen and (min-width: 992px) {
-  #titular {
-    grid-area: titular;
-    align-items: flex-start;
-  }
-}
-
-#titular .logo-deferol {
-  width: 100%;
-  max-width: 250px;
-  height: auto;
-}
-
-#titular .logos-bajos {
-  width: 100%;
-  max-width: 300px;
-  height: auto;
-  opacity: 0.8;
-}
-
-@media only screen and (min-width: 992px) {
-  #titular .logos-bajos {
-    max-width: 250px;
-  }
-}
-
-/* Animacion de carga para el boton */
-#datos button.loading {
-  position: relative;
-  color: transparent;
-}
-
-#datos button.loading::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+.botones .boton:focus-visible {
+  outline: 2px solid var(--azul);
+  outline-offset: 2px;
 }
