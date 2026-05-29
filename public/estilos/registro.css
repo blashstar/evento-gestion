@@ -29,7 +29,9 @@ figure img {
 body {
   background-color: var(--rojo-oscuro);
   color: #fff;
-  font-family: 'Arimo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Arial Narrow', system-ui, -apple-system, sans-serif;
+  font-weight: normal;
+  font-style: normal;
 }
 
 /* ============================================
