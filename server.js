@@ -15,9 +15,9 @@ app.use(helmet({
       defaultSrc: ['\'self\''],
       scriptSrc: ['\'self\'', '\'unsafe-inline\'', 'cdn.jsdelivr.net', 'cdnjs.cloudflare.com', 'unpkg.com'],
       scriptSrcAttr: ['\'self\'', '\'unsafe-inline\''], // Para eventos inline como onclick
-      styleSrc: ['\'self\'', '\'unsafe-inline\'', 'cdn.jsdelivr.net', 'cdnjs.cloudflare.com'],
+      styleSrc: ['\'self\'', '\'unsafe-inline\'', 'cdn.jsdelivr.net', 'cdnjs.cloudflare.com', 'fonts.googleapis.com'],
       imgSrc: ['\'self\'', 'data:'],
-      fontSrc: ['\'self\'', 'cdnjs.cloudflare.com'],
+      fontSrc: ['\'self\'', 'cdnjs.cloudflare.com', 'fonts.googleapis.com', 'fonts.gstatic.com'],
       mediaSrc: ['\'self\'', 'data:'], // Para reproducir audio
       connectSrc: ['\'self\''],
       frameSrc: ['\'none\'']

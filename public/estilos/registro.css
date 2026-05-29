@@ -1,12 +1,17 @@
 /* ============================================
    FUENTE Y VARIABLES
    ============================================ */
-@import url("https://fonts.googleapis.com/css2?family=Arimo:wght@400..700&display=swap");
 
 :root {
   --rojo: #a70000;
   --rojo-oscuro: #460705;
   --azul: #2563eb;
+}
+
+/* Importar fuente Arimo desde local o usar sistema por defecto */
+/* Si se necesita Google Fonts, agregarlo al CSP en el servidor */
+@supports (font-family: 'Arimo') {
+  /* Fuente ya está cargada desde el HTML */
 }
 
 /* ============================================
@@ -24,6 +29,7 @@ figure img {
 body {
   background-color: var(--rojo-oscuro);
   color: #fff;
+  font-family: 'Arimo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* ============================================
@@ -32,10 +38,13 @@ body {
 #pagina {
   height: 100vh;
   min-height: 100dvh;
-  padding: 1rem;
-  font-family: 'Arimo', sans-serif;
+  padding: 2rem 1rem;
   font-optical-sizing: auto;
   font-style: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
 }
 
 @media only screen and (min-width: 768px) {
@@ -65,7 +74,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100%;
 }
 
 #encabezado .logo-deferol {
@@ -115,7 +123,7 @@ body {
   flex-direction: column;
   align-items: stretch;
   gap: 1rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: left;
 }
 
 #registro h2 {
@@ -123,7 +131,7 @@ body {
   margin: 0;
   font-size: 1.5rem;
   color: #fff;
-  text-align: center;
+  text-align: left;
 }
 
 @media only screen and (min-width: 768px) {
@@ -136,7 +144,7 @@ body {
   line-height: 1.4;
   margin: 0;
   color: rgba(255, 255, 255, 0.9);
-  text-align: center;
+  text-align: left;
   font-size: 1rem;
 }
 
@@ -172,9 +180,9 @@ body {
 
 .campo input {
   height: 2.5rem;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   font-size: 1rem;
   color: #333;
   background-color: #fff;
@@ -199,17 +207,17 @@ body {
 .campo input:-webkit-autofill,
 .campo input:-webkit-autofill:hover,
 .campo input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px white inset !important;
-  -webkit-text-fill-color: #333 !important;
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+  -webkit-text-fill-color: #333;
 }
 
-.campo input[aria-invalid="true"] {
-  border-color: #d97706 !important;
+.campo input.error {
+  border-color: #d97706;
   background-color: #fef2f2;
 }
 
 .campo input.valid {
-  border-color: #22c55e !important;
+  border-color: #22c55e;
 }
 
 /* Mensajes de error */
@@ -265,7 +273,7 @@ body {
   font-size: 1rem;
   font-weight: 600;
   padding: 0.75rem 2rem;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -437,46 +445,46 @@ body {
 /* ============================================
    RESPONSIVE
    ============================================ */
-@media only screen and (max-width: 480px) {
+@media only screen and (min-width: 480px) {
   #pagina {
-    padding: 1rem;
+    padding: 2rem 1rem;
   }
-  
+
   #encabezado {
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
   }
-  
+
   #registro {
-    padding: 1rem;
+    padding: 1.5rem;
   }
-  
+
   #registro h2 {
     font-size: 1.3rem;
   }
-  
+
   #registro p {
     font-size: 0.95rem;
   }
-  
+
   .campo input {
     font-size: 0.95rem;
-    padding: 0.75rem 0.75rem;
+    padding: 0.5rem 0.5rem;
   }
-  
+
   .botones .boton {
-    width: 100%;
-    padding: 0.75rem 1rem;
+    /* width: 100%; */
+    padding: 0.75rem 1.5rem;
     font-size: 0.95rem;
   }
-  
-  .botones {
-    justify-content: center !important;
+
+  #pagina .botones {
+    justify-content: center;
   }
-  
+
   #qr-success .buttons {
     flex-direction: column;
   }
-  
+
   #qr-success .buttons button {
     width: 100%;
   }

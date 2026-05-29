@@ -67,7 +67,19 @@ router.post('/registro', [
     }
 
     const tokenValidacion = crypto.randomUUID();
-    const qrDataUrl = await QRCode.toDataURL(tokenValidacion);
+    
+    // Generar QR code
+    let qrDataUrl;
+    try {
+      qrDataUrl = await QRCode.toDataURL(tokenValidacion);
+    } catch (qrError) {
+      console.error('Error al generar código QR:', qrError);
+      return res.status(500).json({
+        success: false,
+        error: 'Error al generar código QR',
+        mensaje: process.env.NODE_ENV === 'development' ? qrError.message : undefined
+      });
+    }
 
     const asistente = await Asistente.create({
       nombre,
@@ -91,6 +103,7 @@ router.post('/registro', [
       });
     } catch (emailError) {
       console.error('Error al enviar correo:', emailError);
+      // No fallar el registro si el email falla
     }
 
     res.status(201).json({
