@@ -5,7 +5,7 @@
 :root {
   --rojo: #a70000;
   --rojo-oscuro: #460705;
-  --azul: #2563eb;
+  /* --rojo: #2563eb; */
 }
 
 /* Importar fuente Arimo desde local o usar sistema por defecto */
@@ -196,7 +196,7 @@ body {
 
 .campo input:focus {
   outline: none;
-  border-color: var(--azul);
+  border-color: var(--rojo);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
@@ -235,7 +235,7 @@ body {
 
 .campo .error-message {
   font-size: 0.85rem;
-  color: #d97706;
+  color: #CCC;
   min-height: 1.2rem;
   display: none;
 }
@@ -347,13 +347,13 @@ body {
 }
 
 #qr-success h2 {
-  color: var(--azul);
+  color: #fff;
   margin: 0 0 0.5rem;
   font-size: 1.5rem;
 }
 
 #qr-success p {
-  color: #666;
+  color: #DDD;
   margin: 0 0 1rem;
 }
 
@@ -381,18 +381,19 @@ body {
   gap: 1rem;
   justify-content: center;
   margin: 1.5rem 0;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 
 #qr-success .buttons button {
-  background-color: var(--azul);
-  color: #fff;
+  background-color: #fff;
+  color: #000;
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: bold;
+  /* font-weight: bold; */
+  text-align: center;
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -407,7 +408,7 @@ body {
 }
 
 #qr-success .qr-info {
-  color: #666;
+  color: #DDD;
   font-size: 0.9rem;
   margin: 0.5rem 0;
 }
@@ -478,7 +479,7 @@ body {
   }
 
   #qr-success .buttons {
-    flex-direction: column;
+    /* flex-direction: column; */
   }
 
   #qr-success .buttons button {
@@ -490,11 +491,22 @@ body {
    ACCESIBILIDAD
    ============================================ */
 .campo input:focus-visible {
-  outline: 2px solid var(--azul);
+  outline: 2px solid var(--rojo);
   outline-offset: 2px;
 }
 
 .botones .boton:focus-visible {
-  outline: 2px solid var(--azul);
+  outline: 2px solid var(--rojo);
   outline-offset: 2px;
+}
+
+@media only screen and (min-width: 992px) {
+
+  #registro {
+    padding: 2rem;
+  }
+
+  #pagina .botones {
+    justify-content: flex-end;
+  }
 }

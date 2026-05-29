@@ -19,16 +19,26 @@ body {
   min-height: 100vh;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-weight: 300;
-}
-
-#pagina {
-  background-color: var(--rojo);
-  color: #fff;
-  min-height: 100vh;
-  padding: 0;
   background-image: url("/img/fondo_movil.png");
   background-size: cover;
   background-position: top center;
+}
+@media only screen and (min-width: 768px) {
+  body {
+    background-image: url("/img/fondo_tableta.png");
+  }
+}
+@media only screen and (min-width: 992px) {
+  body {
+    background-image: url("/img/fondo_escritorio.png");
+  }
+}
+
+#pagina {
+  /* background-color: var(--rojo); */
+  color: #fff;
+  min-height: 100vh;
+  padding: 0;
   display: flex;
   flex-direction: column;
 }
