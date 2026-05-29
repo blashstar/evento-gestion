@@ -282,7 +282,7 @@ body {
 .botones .boton:hover {
   background-color: #f0f0f0;
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .botones .boton:active {
@@ -448,10 +448,6 @@ body {
 @media only screen and (min-width: 480px) {
   #pagina {
     padding: 2rem 1rem;
-  }
-
-  #encabezado {
-    /* margin-bottom: 1rem; */
   }
 
   #registro {
