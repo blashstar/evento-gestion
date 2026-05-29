@@ -23,9 +23,6 @@ class QrValidationService {
     this.timerOcultarResultado = null;
     this.timerReactivarEscaneo = null;
 
-    // Audio precargado para reproducción inmediata
-    this.audioIngreso = null;
-
     // Constantes de configuración
     this.CONFIG = {
       UUID_REGEX: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
@@ -34,7 +31,6 @@ class QrValidationService {
       TIMER_OCULTAR_MS: 90000,     // 90 segundos para ocultar resultado
       TIMER_REACTIVAR_MS: 15000,   // 15 segundos para reactivar escaneo
       MENSAJE_YA_INGRESO: 'Este asistente YA INGRESO al evento',
-      RUTA_AUDIO_INGRESO: '/media/anuncio.mp3',
       QR_CONFIG: {
         fps: 10,
         qrbox: { width: 250, height: 250 },
@@ -49,30 +45,13 @@ class QrValidationService {
    * Inicializa el servicio y comienza el escaneo
    */
   inicializar() {
-    this.precargarAudio();
     this.inicializarEscaneo();
     this.configurarEventos();
   }
 
-  /**
-   * Precaaarga el audio de ingreso para evitar retrasos en reproducción
+/**
+   * Inicializa el escáner QR (SRP: única responsabilidad)
    */
-  precargarAudio() {
-    this.audioIngreso = new Audio(this.CONFIG.RUTA_AUDIO_INGRESO);
-    this.audioIngreso.preload = 'auto';
-  }
-
-  /**
-   * Reproduce el audio de ingreso (primera vez)
-   */
-  reproducirAudioIngreso() {
-    this.audioIngreso.currentTime = 0;
-    this.audioIngreso.play().catch(err => {
-      console.error('Error al reproducir audio:', err);
-    });
-  }
-
-  /**
    * Inicializa el escáner QR (SRP: única responsabilidad)
    */
   inicializarEscaneo() {
@@ -256,9 +235,6 @@ class QrValidationService {
    * Procesa un ingreso exitoso (primera vez)
    */
   procesarIngresoExitoso(data) {
-    // Reproducir audio de ingreso (primera vez)
-    this.reproducirAudioIngreso();
-
     // Actualizar UUID procesado
     this.almacenarUuidProcesado(data.uuid);
 
