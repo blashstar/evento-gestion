@@ -202,6 +202,11 @@
       color: #666;
     }
 
+    .link-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
     .jb-copy-link.is-copied {
       background-color: #48c774;
       border-color: #48c774;
@@ -446,26 +451,38 @@
                 <span class="icon has-text-primary"><i class="mdi mdi-open-in-new"></i></span>
                 <div class="link-text">
                   <strong>Registro</strong>
-                  <span class="link-url" id="url-registro">/registro</span>
+                  <span class="link-url" id="url-registro"></span>
                 </div>
               </div>
-              <button type="button" class="button is-small is-info jb-copy-link" data-target="url-registro">
-                <span class="icon"><i class="mdi mdi-content-copy"></i></span>
-                <span>Copiar</span>
-              </button>
+              <div class="link-actions">
+                <a class="button is-small is-primary jb-open-link" data-path="/registro" target="_blank" rel="noopener noreferrer">
+                  <span class="icon"><i class="mdi mdi-open-in-new"></i></span>
+                  <span>Abrir</span>
+                </a>
+                <button type="button" class="button is-small is-info jb-copy-link" data-target="url-registro">
+                  <span class="icon"><i class="mdi mdi-content-copy"></i></span>
+                  <span>Copiar</span>
+                </button>
+              </div>
             </div>
             <div class="link-row">
               <div class="link-info">
                 <span class="icon has-text-primary"><i class="mdi mdi-qrcode-scan"></i></span>
                 <div class="link-text">
                   <strong>Validación QR</strong>
-                  <span class="link-url" id="url-validacion">/validacion</span>
+                  <span class="link-url" id="url-validacion"></span>
                 </div>
               </div>
-              <button type="button" class="button is-small is-info jb-copy-link" data-target="url-validacion">
-                <span class="icon"><i class="mdi mdi-content-copy"></i></span>
-                <span>Copiar</span>
-              </button>
+              <div class="link-actions">
+                <a class="button is-small is-primary jb-open-link" data-path="/validacion" target="_blank" rel="noopener noreferrer">
+                  <span class="icon"><i class="mdi mdi-open-in-new"></i></span>
+                  <span>Abrir</span>
+                </a>
+                <button type="button" class="button is-small is-info jb-copy-link" data-target="url-validacion">
+                  <span class="icon"><i class="mdi mdi-content-copy"></i></span>
+                  <span>Copiar</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

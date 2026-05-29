@@ -748,7 +748,7 @@ document.addEventListener('click', function(e) {
     const targetId = copyBtn.dataset.target;
     const urlEl = document.getElementById(targetId);
     if (urlEl) {
-      const fullUrl = window.location.origin + urlEl.textContent.trim();
+      const fullUrl = urlEl.textContent.trim();
       navigator.clipboard.writeText(fullUrl).then(() => {
         const originalHtml = copyBtn.innerHTML;
         copyBtn.classList.add('is-copied');
@@ -846,6 +846,22 @@ document.addEventListener('DOMContentLoaded', function() {
   filterEstado.addEventListener('change', () => {
     // Aplicar filtros usando Tabulator
     applyFilters();
+  });
+
+  // Inicializar URLs completas en sección de enlaces
+  document.querySelectorAll('.link-url').forEach(el => {
+    const path = el.textContent.trim();
+    if (path) {
+      el.textContent = window.location.origin + path;
+    }
+  });
+
+  // Inicializar href de botones Abrir
+  document.querySelectorAll('.jb-open-link').forEach(el => {
+    const path = el.dataset.path;
+    if (path) {
+      el.href = window.location.origin + path;
+    }
   });
 
   // Cargar datos iniciales al iniciar
