@@ -21,6 +21,10 @@ router.get('/validacion', (_req, res) => {
   res.sendFile(path.join(process.cwd(), 'public', 'validacion.html'));
 });
 
+router.get('/terminos', (_req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public', 'terminos.html'));
+});
+
 // Admin HTML pages - con CSRF token embebido
 router.get('/adm', (_req, res) => {
   // Generar CSRF token y guardarlo en cookie
