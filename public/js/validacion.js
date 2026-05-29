@@ -28,7 +28,7 @@ class QrValidationService {
       UUID_REGEX: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
       DEBOUNCE_MS: 100,
       DUPLICADO_FEEDBACK_MS: 2000, // Feedback de UUID duplicado
-      TIMER_OCULTAR_MS: 90000,     // 90 segundos para ocultar resultado
+      TIMER_OCULTAR_MS: 300000,    // 5 minutos para ocultar resultado
       TIMER_REACTIVAR_MS: 15000,   // 15 segundos para reactivar escaneo
       MENSAJE_YA_INGRESO: 'Este asistente YA INGRESO al evento',
       QR_CONFIG: {
@@ -419,7 +419,7 @@ class QrValidationService {
    * Muestra feedback temporal para UUID duplicado
    */
   mostrarFeedbackDuplicado() {
-    this.actualizarEstado('duplicado', '🔄', 'UUID ya procesado recientemente');
+    this.actualizarEstado('duplicado', '🔄', 'El usuario ya ingresó');
     setTimeout(() => {
       this.actualizarEstado('escaneando', '📷', 'Escaneando...');
     }, this.CONFIG.DUPLICADO_FEEDBACK_MS);
