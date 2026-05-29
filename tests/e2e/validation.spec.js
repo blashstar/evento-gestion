@@ -20,6 +20,7 @@ test.describe('Pagina de Landing', () => {
   test('deberia cargar la pagina de inicio correctamente', async ({ page }) => {
     await expect(page).toHaveTitle(/Deferol|Evento/i);
     
+
     // Verificar elementos principales
     const logo = page.locator('.logo, img[alt*="Logo"]');
     await expect(logo.first()).toBeVisible();
@@ -28,14 +29,14 @@ test.describe('Pagina de Landing', () => {
   test('deberia tener enlace a la pagina de registro via URL directa', async ({ page }) => {
     // Navegar directamente a registro
     await page.goto(`${BASE_URL}/registro`);
-    await expect(page).toHaveURL(/\/registro/);
+    await expect(page).toHaveURL(new RegExp('/registro'));
     await expect(page.locator('form')).toBeVisible();
   });
 
   test('deberia tener enlace a la pagina de validacion via URL directa', async ({ page }) => {
     // Navegar directamente a validacion
     await page.goto(`${BASE_URL}/validacion`);
-    await expect(page).toHaveURL(/\/validacion/);
+    await expect(page).toHaveURL(new RegExp('/validacion'));
   });
 });
 
@@ -48,7 +49,7 @@ test.describe('Pagina de Registro', () => {
   });
 
   test('deberia cargar la pagina de registro correctamente', async ({ page }) => {
-    await expect(page).toHaveURL(/\/registro/);
+    await expect(page).toHaveURL(new RegExp('/registro'));
     await expect(page.locator('form')).toBeVisible();
   });
 
@@ -56,19 +57,23 @@ test.describe('Pagina de Registro', () => {
     await page.locator('button[type="submit"]').click();
     await page.waitForTimeout(500);
     
+
     const pageContent = await page.content();
     expect(pageContent).toMatch(/requerido|válido|required/i);
   });
 
   test('deberia mostrar error para correo invalido', async ({ page }) => {
-    await page.fill('input[name="nombres"]', 'Juan');
-    await page.fill('input[name="apellidos"]', 'Perez');
+    await page.fill('input[name="nombre"]', 'Juan Perez');
     await page.fill('input[name="correo"]', 'correo-invalido');
     await page.fill('input[name="empresa"]', 'Empresa Test');
+    await page.fill('input[name="celular"]', '987654321');
+    await page.fill('input[name="especialidad"]', 'Ingeniero');
     
+
     await page.locator('button[type="submit"]').click();
     await page.waitForTimeout(500);
     
+
     const pageContent = await page.content();
     expect(pageContent.toLowerCase()).toMatch(/correo|válido|email/i);
   });
@@ -83,8 +88,9 @@ test.describe('Pagina de Validacion (Escaner QR)', () => {
   });
 
   test('deberia cargar la pagina de validacion correctamente', async ({ page }) => {
-    await expect(page).toHaveURL(/\/validacion/);
+    await expect(page).toHaveURL(new RegExp('/validacion'));
     
+
     // Verificar elementos principales
     await expect(page.locator('#escaner')).toBeVisible();
     // El lector-qr puede estar oculto si no hay camara disponible
@@ -107,9 +113,11 @@ test.describe('Pagina de Validacion (Escaner QR)', () => {
   test('deberia mostrar estado de escaneo', async ({ page }) => {
     await page.waitForTimeout(2000);
     
+
     const estado = page.locator('#estado-escaneo');
     await expect(estado).toBeVisible();
     
+
     const estadoText = await estado.textContent();
     // Puede mostrar "Escaneando..." o "Error al acceder a la camara" dependiendo de si hay camara
     expect(
@@ -127,8 +135,10 @@ test.describe('Endpoints de API', () => {
   test('/api/_ok deberia devolver estado saludable', async ({ request }) => {
     const response = await request.get(`${BASE_URL}/api/_ok`);
     
+
     expect(response.ok()).toBeTruthy();
     
+
     const data = await response.json();
     expect(data.status).toBe('ok');
   });
@@ -138,8 +148,10 @@ test.describe('Endpoints de API', () => {
       data: { token: INVALID_UUID }
     });
     
+
     const data = await response.json();
     
+
     expect(data.success).toBe(false);
     expect(data.error).toMatch(/UUID|token|válido/i);
   });
@@ -149,9 +161,11 @@ test.describe('Endpoints de API', () => {
       data: { token: '12345678-1234-1234-1234-123456789012' }
     });
     
+
     // Puede devolver 404 (no encontrado) o 500 (si no hay DB)
     expect([404, 500]).toContain(response.status());
     
+
     const data = await response.json();
     expect(data.success).toBe(false);
   });
@@ -163,6 +177,7 @@ test.describe('Endpoints de API', () => {
       data: { token: nonExistentUuid }
     });
     
+
     // La respuesta puede ser 404 (no encontrado) o 500 (error de DB)
     expect([404, 500]).toContain(response.status());
   });
@@ -170,13 +185,15 @@ test.describe('Endpoints de API', () => {
   test('/api/registro deberia rechazar datos invalidos', async ({ request }) => {
     const response = await request.post(`${BASE_URL}/api/registro`, {
       data: {
-        nombres: '',
-        apellidos: '',
+        nombre: '',
         correo: 'invalid',
-        empresa: ''
+        empresa: '',
+        celular: '',
+        especialidad: ''
       }
     });
     
+
     expect([400, 422]).toContain(response.status());
   });
 });
@@ -188,16 +205,18 @@ test.describe('Diseno Responsivo', () => {
   test('deberia funcionar en viewport movil', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     
+
     await page.goto(`${BASE_URL}/validacion`);
-    await expect(page).toHaveURL(/\/validacion/);
+    await expect(page).toHaveURL(new RegExp('/validacion'));
     await expect(page.locator('#escaner')).toBeVisible();
   });
 
   test('deberia funcionar en viewport de tablet', async ({ page }) => {
     await page.setViewportSize({ width: 768, height: 1024 });
     
+
     await page.goto(`${BASE_URL}/validacion`);
-    await expect(page).toHaveURL(/\/validacion/);
+    await expect(page).toHaveURL(new RegExp('/validacion'));
   });
 });
 
@@ -208,13 +227,16 @@ test.describe('Cabeceras de Seguridad', () => {
   test('deberia tener cabeceras de seguridad', async ({ request }) => {
     const response = await request.get(BASE_URL);
     
+
     const headers = response.headers();
     
+
     const hasSecurityHeaders = 
       headers['x-content-type-options'] || 
       headers['x-frame-options'] ||
       headers['content-security-policy'];
     
+
     expect(hasSecurityHeaders).toBeTruthy();
   });
 });
@@ -226,25 +248,30 @@ test.describe('Flujos de Usuario', () => {
   test('deberia poder navegar a las principales paginas', async ({ page }) => {
     // Navegar a registro
     await page.goto(`${BASE_URL}/registro`);
-    await expect(page).toHaveURL(/\/registro/);
+    await expect(page).toHaveURL(new RegExp('/registro'));
     await expect(page.locator('form')).toBeVisible();
     
+
     // Navegar a validacion
     await page.goto(`${BASE_URL}/validacion`);
-    await expect(page).toHaveURL(/\/validacion/);
+    await expect(page).toHaveURL(new RegExp('/validacion'));
     
+
     // Verificar elementos del scanner (el lector-qr puede estar oculto si no hay camara)
     await expect(page.locator('#lector-qr')).toBeAttached();
     await expect(page.locator('#estado-escaneo')).toBeVisible();
   });
   
+
   test('deberia cargar la pagina principal sin errores', async ({ page }) => {
     await page.goto(BASE_URL);
     
+
     // Verificar titulo
     const title = await page.title();
     expect(title.length).toBeGreaterThan(0);
     
+
     // Verificar que no hay errores criticos en consola
     const consoleErrors = [];
     page.on('console', msg => {
@@ -253,8 +280,10 @@ test.describe('Flujos de Usuario', () => {
       }
     });
     
+
     await page.waitForTimeout(1000);
     
+
     // No deberia haber errores criticos (algunos errores de camara son esperados)
     const criticalErrors = consoleErrors.filter(e => 
       !e.includes('camera') && !e.includes('Camera') && !e.includes('MediaDevice')

@@ -15,17 +15,21 @@ const ADMIN_PASS = 'admin123';
  */
 test.describe('Login de Administrador', () => {
   
+
   test('deberia cargar la pagina de login correctamente', async ({ page }) => {
     await page.goto(`${BASE_URL}/adm/login`);
     
+
     // Verificar titulo
     await expect(page).toHaveTitle(/Admin|Login/i);
     
+
     // Verificar elementos del formulario
     await expect(page.locator('input[name="correo"]')).toBeVisible();
     await expect(page.locator('input[name="password"]')).toBeVisible();
     await expect(page.locator('button[type="submit"]')).toBeVisible();
     
+
     // Verificar logo
     await expect(page.locator('text=Deferol')).toBeVisible();
     await expect(page.locator('text=Panel de Administración')).toBeVisible();
@@ -38,28 +42,36 @@ test.describe('Login de Administrador', () => {
       if (msg.type() === 'error') consoleErrors.push(msg.text());
     });
     
+
     await page.goto(`${BASE_URL}/adm/login`);
     
+
     // Wait for page load
     await page.waitForLoadState('networkidle');
     
+
     // Fill in credentials
     await page.fill('input[name="correo"]', 'wrong@test.com');
     await page.fill('input[name="password"]', 'wrongpass');
     
+
     // Click submit
     await page.click('button[type="submit"]');
     
+
     // Wait a bit for the response
     await page.waitForTimeout(3000);
     
+
     // Debug: print console errors
     console.log('Console errors:', consoleErrors);
     
+
     // Check if there's a visible notification
     const notificationVisible = await page.locator('.notification.is-visible').isVisible().catch(() => false);
     console.log('Notification visible:', notificationVisible);
     
+
     // If there's an error, print current page content
     if (!notificationVisible) {
       const pageContent = await page.content();
@@ -70,24 +82,30 @@ test.describe('Login de Administrador', () => {
   test('deberia iniciar sesion exitosamente con credenciales correctas', async ({ page }) => {
     await page.goto(`${BASE_URL}/adm/login`);
     
+
     // Wait for page to be ready
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(1000);
     
+
     // Fill in credentials
     await page.fill('input[name="correo"]', ADMIN_USER);
     await page.fill('input[name="password"]', ADMIN_PASS);
     
+
     // Submit form
     await page.click('button[type="submit"]');
     
+
     // Wait for possible redirect or response
     await page.waitForTimeout(3000);
     
+
     // Check if redirected to /adm/ or if the URL contains /adm
     const currentUrl = page.url();
     console.log('Current URL after login:', currentUrl);
     
+
     // Should be on /adm/ or there should be dashboard elements visible
     const hasDashboardElements = await Promise.any([
       page.locator('.content-header').isVisible().catch(() => false),
@@ -96,6 +114,7 @@ test.describe('Login de Administrador', () => {
       page.locator('#asistentes-table').isVisible().catch(() => false)
     ]).catch(() => false);
     
+
     expect(hasDashboardElements || currentUrl.includes('/adm/')).toBe(true);
   });
 
@@ -106,9 +125,11 @@ test.describe('Login de Administrador', () => {
     await page.fill('input[name="password"]', ADMIN_PASS);
     await page.click('button[type="submit"]');
     
+
     // Esperar redirect
     await page.waitForURL(`${BASE_URL}/adm/`, { timeout: 10000 });
     
+
     // Verificar que token esta en localStorage
     const token = await page.evaluate(() => localStorage.getItem('adminToken'));
     expect(token).toBeTruthy();
@@ -120,22 +141,28 @@ test.describe('Login de Administrador', () => {
     const consoleLogs = [];
     page.on('console', msg => consoleLogs.push(msg.text()));
     
+
     await page.goto(`${BASE_URL}/adm/login`);
     
+
     // Wait for page to fully load
     await page.waitForLoadState('networkidle');
     
+
     // Give extra time for the fetch to complete
     await page.waitForTimeout(2000);
     
+
     // Debug: print console logs
     console.log('Console logs:', consoleLogs);
     
+
     // Check if CSRF token input exists and has value
     const csrfInput = page.locator('#csrf-token');
     const isVisible = await csrfInput.isVisible();
     console.log('CSRF input visible:', isVisible);
     
+
     if (isVisible) {
       const csrfToken = await csrfInput.inputValue();
       console.log('CSRF token value:', csrfToken ? 'has value' : 'empty');
@@ -154,6 +181,7 @@ test.describe('Login de Administrador', () => {
  */
 test.describe('Dashboard de Administrador', () => {
   
+
   test.beforeEach(async ({ page }) => {
     // Login antes de cada test
     await page.goto(`${BASE_URL}/adm/login`);
@@ -167,6 +195,7 @@ test.describe('Dashboard de Administrador', () => {
     // Verificar elementos del dashboard
     await expect(page.locator('.content-header h1')).toContainText('Asistentes');
     
+
     // Verificar tarjetas de estadisticas
     await expect(page.locator('text=Total Registrados')).toBeVisible();
     await expect(page.locator('text=Pendientes')).toBeVisible();
@@ -196,13 +225,16 @@ test.describe('Dashboard de Administrador', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(3000);
     
+
     // Check if there are any rows in the table
     const hasRows = await page.locator('.tabulator-row').count().catch(() => 0);
     
+
     if (hasRows > 0) {
       // Click on the first view button
       await page.locator('button:has(i.fa-eye)').first().click();
       
+
       // Verify modal opens
       await expect(page.locator('#detail-modal')).toHaveClass(/is-active/, { timeout: 5000 });
       await expect(page.locator('text=Detalle del Asistente')).toBeVisible();
@@ -218,15 +250,18 @@ test.describe('Dashboard de Administrador', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(1000);
     
+
     await page.fill('input[name="correo"]', ADMIN_USER);
     await page.fill('input[name="password"]', ADMIN_PASS);
     await page.click('button[type="submit"]');
     await page.waitForTimeout(3000);
     
+
     // Try to find logout button - check if we're on the dashboard
     // Just verify token is present, then clear it to simulate logout
     const tokenBefore = await page.evaluate(() => localStorage.getItem('adminToken'));
     
+
     if (tokenBefore) {
       // Clear the token (simulating logout)
       await page.evaluate(() => localStorage.removeItem('adminToken'));
@@ -234,6 +269,7 @@ test.describe('Dashboard de Administrador', () => {
       await page.evaluate(() => localStorage.removeItem('csrfToken'));
     }
     
+
     // Verify token is cleared
     const tokenAfter = await page.evaluate(() => localStorage.getItem('adminToken'));
     expect(tokenAfter).toBeFalsy();
@@ -245,7 +281,8 @@ test.describe('Dashboard de Administrador', () => {
  */
 test.describe('API de Administrador', () => {
   
-  test('POST /adm/login deberia retornar token JWT con credenciales validas', async ({ request }) => {
+
+  test('POST /adm/login deberia retirar token JWT con credenciales validas', async ({ request }) => {
     const response = await request.post(`${BASE_URL}/adm/login`, {
       data: {
         correo: ADMIN_USER,
@@ -253,8 +290,10 @@ test.describe('API de Administrador', () => {
       }
     });
     
+
     expect(response.status()).toBe(200);
     
+
     const body = await response.json();
     expect(body.success).toBe(true);
     expect(body.data.token).toBeTruthy();
@@ -271,8 +310,10 @@ test.describe('API de Administrador', () => {
       }
     });
     
+
     expect(response.status()).toBe(401);
     
+
     const body = await response.json();
     expect(body.success).toBe(false);
     expect(body.error).toContain('inválidas');
@@ -286,8 +327,10 @@ test.describe('API de Administrador', () => {
       }
     });
     
+
     expect(response.status()).toBe(400);
     
+
     const body = await response.json();
     expect(body.success).toBe(false);
     expect(body.errores).toBeTruthy();
@@ -296,8 +339,10 @@ test.describe('API de Administrador', () => {
   test('GET /adm/csrf-token deberia retornar un token CSRF', async ({ request }) => {
     const response = await request.get(`${BASE_URL}/adm/csrf-token`);
     
+
     expect(response.status()).toBe(200);
     
+
     const body = await response.json();
     expect(body.csrfToken).toBeTruthy();
     expect(body.csrfToken.length).toBeGreaterThan(30);
@@ -306,6 +351,7 @@ test.describe('API de Administrador', () => {
   test('GET /adm/asistentes deberia requerir autenticacion', async ({ request }) => {
     const response = await request.get(`${BASE_URL}/adm/asistentes`);
     
+
     expect(response.status()).toBe(401);
   });
 
@@ -318,9 +364,11 @@ test.describe('API de Administrador', () => {
       }
     });
     
+
     const loginBody = await loginResponse.json();
     const token = loginBody.data.token;
     
+
     // Ahora hacer peticion con token
     const response = await request.get(`${BASE_URL}/adm/asistentes`, {
       headers: {
@@ -328,8 +376,10 @@ test.describe('API de Administrador', () => {
       }
     });
     
+
     expect(response.status()).toBe(200);
     
+
     const body = await response.json();
     expect(body.success).toBe(true);
     expect(body.data.asistentes).toBeTruthy();
@@ -346,32 +396,38 @@ test.describe('API de Administrador', () => {
       }
     });
     
+
     const loginBody = await loginResponse.json();
     const token = loginBody.data.token;
     
+
     // Obtener lista de asistentes
     const listResponse = await request.get(`${BASE_URL}/adm/asistentes`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     
+
     const listBody = await listResponse.json();
     
+
     if (listBody.data.asistentes.length > 0) {
       // Obtener el primer asistente
       const primerId = listBody.data.asistentes[0].id;
       
+
       // Obtener detalle
       const detailResponse = await request.get(`${BASE_URL}/adm/asistentes/${primerId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       
+
       expect(detailResponse.status()).toBe(200);
       
+
       const detailBody = await detailResponse.json();
       expect(detailBody.success).toBe(true);
       expect(detailBody.data.id).toBe(primerId);
-      expect(detailBody.data.nombres).toBeTruthy();
-      expect(detailBody.data.apellidos).toBeTruthy();
+      expect(detailBody.data.nombre).toBeTruthy();
       expect(detailBody.data.correo).toBeTruthy();
     }
   });
@@ -385,14 +441,17 @@ test.describe('API de Administrador', () => {
       }
     });
     
+
     const loginBody = await loginResponse.json();
     const token = loginBody.data.token;
     
+
     // Obtener detalle de id que no existe
     const response = await request.get(`${BASE_URL}/adm/asistentes/999999`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     
+
     expect(response.status()).toBe(404);
   });
 
@@ -405,16 +464,20 @@ test.describe('API de Administrador', () => {
       }
     });
     
+
     const loginBody = await loginResponse.json();
     const token = loginBody.data.token;
     
+
     // Obtener estadisticas
     const response = await request.get(`${BASE_URL}/adm/estadisticas`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     
+
     expect(response.status()).toBe(200);
     
+
     const body = await response.json();
     expect(body.success).toBe(true);
     expect(body.data.total).toBeTruthy();
@@ -430,6 +493,7 @@ test.describe('API de Administrador', () => {
       }
     });
     
+
     expect(response.status()).toBe(401);
   });
 });
@@ -440,6 +504,7 @@ test.describe('API de Administrador', () => {
 test.describe('Filtros de Listado', () => {
   let token;
   
+
   test.beforeAll(async ({ request }) => {
     // Login para obtener token
     const loginResponse = await request.post(`${BASE_URL}/adm/login`, {
@@ -449,37 +514,44 @@ test.describe('Filtros de Listado', () => {
       }
     });
     
+
     const loginBody = await loginResponse.json();
     token = loginBody.data.token;
   });
 
-  test('deberia filtrar asistentes por nombrebusqueda', async ({ request }) => {
+  test('deberia filtrar asistentes por nombre/busqueda', async ({ request }) => {
     // Obtener todos los asistentes
     const allResponse = await request.get(`${BASE_URL}/adm/asistentes?limit=100`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     
+
     const allBody = await allResponse.json();
     expect(allBody.success).toBe(true);
     
+
     const asistentes = allBody.data.asistentes;
     expect(asistentes.length).toBeGreaterThan(0);
     
+
     // Usar el nombre del primer asistente para buscar
     const primerAsistente = asistentes[0];
-    const nombreBuscar = primerAsistente.nombres.substring(0, 3).toLowerCase();
+    const nombreBuscar = primerAsistente.nombre.substring(0, 3).toLowerCase();
     
+
     // Buscar con filtro
     const searchResponse = await request.get(`${BASE_URL}/adm/asistentes?limit=100&busqueda=${nombreBuscar}`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     
+
     const searchBody = await searchResponse.json();
     expect(searchBody.success).toBe(true);
     
+
     // Verificar que los resultados contengan el texto buscado
     searchBody.data.asistentes.forEach(asistente => {
-      const nombreCompleto = `${asistente.nombres} ${asistente.apellidos}`.toLowerCase();
+      const nombreCompleto = asistente.nombre.toLowerCase();
       expect(nombreCompleto).toContain(nombreBuscar);
     });
   });
@@ -490,9 +562,11 @@ test.describe('Filtros de Listado', () => {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     
+
     const body = await response.json();
     expect(body.success).toBe(true);
     
+
     // Verificar que todos los resultados tengan estado diferente a ingreso
     body.data.asistentes.forEach(asistente => {
       expect(asistente.estado).not.toBe('ingresado');

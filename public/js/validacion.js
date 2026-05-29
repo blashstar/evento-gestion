@@ -357,7 +357,7 @@ class QrValidationService {
     this.resultadoContenido.innerHTML = `
       <h2>✅ Ingreso Permitido</h2>
       <div class="datos-asistente">
-        <strong>${data.nombres} ${data.apellidos}</strong>
+        <strong>${data.nombre}</strong>
       </div>
       <div class="empresa">${data.empresa}</div>
       <div class="hora-ingreso">Ingreso: ${new Date(data.fechaIngreso).toLocaleString('es-PE')}</div>
@@ -383,7 +383,7 @@ class QrValidationService {
     this.resultadoContenido.innerHTML = `
       <h2>ℹ️ El Usuario ya ha ingresado</h2>
       <div class="datos-asistente">
-        <strong>${data.nombres} ${data.apellidos}</strong>
+        <strong>${data.nombre}</strong>
       </div>
       <div class="hora-ingreso">
         <strong>Último ingreso:</strong> ${fechaUltimoIngreso}

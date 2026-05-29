@@ -111,25 +111,40 @@ function initTable() {
       },
       {
         title: 'Nombre Completo',
-        field: 'nombres',
+        field: 'nombre',
         minWidth: 180,
         responsive: 0,
         headerFilter: false,
         download: true,
         titleDownload: 'Nombre Completo',
-        formatter: (cell) => {
-          const data = cell.getRow().getData();
-          return `${data.nombres || ''} ${data.apellidos || ''}`.trim();
-        },
-        accessorDownload: (_value, data, _type, _params, _column) => {
-          return `${data.nombres || ''} ${data.apellidos || ''}`.trim();
-        },
+        formatter: (cell) => cell.getValue() || '',
+        accessorDownload: (_value, data, _type, _params, _column) => data.nombre || '',
+        resizable:false
+      },
+      {
+        title: 'Celular',
+        field: 'celular',
+        minWidth: 120,
+        responsive: 1,
+        download: true,
+        titleDownload: 'Celular',
+        formatter: (cell) => cell.getValue() || '',
+        resizable:false
+      },
+      {
+        title: 'Especialidad',
+        field: 'especialidad',
+        minWidth: 150,
+        responsive: 1,
+        download: true,
+        titleDownload: 'Especialidad',
+        formatter: (cell) => cell.getValue() || '',
         resizable:false
       },
       {
         title: 'Correo',
         field: 'correo',
-        responsive: 1,
+        responsive: 2,
         download: true,
         titleDownload: 'Correo',
         formatter: (cell) => cell.getValue(),
@@ -138,7 +153,7 @@ function initTable() {
       {
         title: 'Empresa',
         field: 'empresa',
-        responsive: 1,
+        responsive: 2,
         download: true,
         titleDownload: 'Empresa',
         formatter: (cell) => cell.getValue(),
@@ -340,13 +355,17 @@ function renderDetalle(asistente) {
 
   container.innerHTML = `
     <div class="columns is-multiline">
-      <div class="column is-half">
-        <label class="label">Nombres</label>
-        <p class="content is-medium">${asistente.nombres}</p>
+      <div class="column is-full">
+        <label class="label">Nombre Completo</label>
+        <p class="content is-medium">${asistente.nombre}</p>
       </div>
       <div class="column is-half">
-        <label class="label">Apellidos</label>
-        <p class="content is-medium">${asistente.apellidos}</p>
+        <label class="label">Celular</label>
+        <p class="content is-medium">${asistente.celular || '-'}</p>
+      </div>
+      <div class="column is-half">
+        <label class="label">Especialidad</label>
+        <p class="content is-medium">${asistente.especialidad || '-'}</p>
       </div>
       <div class="column is-full">
         <label class="label">Correo</label>
@@ -394,7 +413,7 @@ function renderDetalle(asistente) {
             </button>
           </div>
           <input type="hidden" id="qr-asistente-id" value="${asistente.id}">
-          <input type="hidden" id="qr-asistente-nombre" value="${asistente.nombres} ${asistente.apellidos}">
+          <input type="hidden" id="qr-asistente-nombre" value="${asistente.nombre}">
         ` : '<p class="has-text-grey">No disponible</p>'}
       </div>
     </div>
@@ -406,13 +425,13 @@ function renderDetalle(asistente) {
       // Botón descargar QR
       const btnDownload = document.getElementById('btn-download-qr');
       if (btnDownload) {
-        btnDownload.addEventListener('click', () => downloadQR(asistente.qr_codigo, `${asistente.nombres} ${asistente.apellidos}`));
+        btnDownload.addEventListener('click', () => downloadQR(asistente.qr_codigo, asistente.nombre));
       }
 
       // Botón compartir QR
       const btnShare = document.getElementById('btn-share-qr');
       if (btnShare) {
-        btnShare.addEventListener('click', () => shareQR(asistente.qr_codigo, `${asistente.nombres} ${asistente.apellidos}`));
+        btnShare.addEventListener('click', () => shareQR(asistente.qr_codigo, asistente.nombre));
       }
 
       // Botón enviar por correo
@@ -804,10 +823,11 @@ function applyFilters() {
     table.setFilter((item) => {
       // Filtro de búsqueda
       if (search) {
-        const matchSearch = (item.nombres && item.nombres.toLowerCase().includes(search)) ||
-                            (item.apellidos && item.apellidos.toLowerCase().includes(search)) ||
+        const matchSearch = (item.nombre && item.nombre.toLowerCase().includes(search)) ||
                             (item.correo && item.correo.toLowerCase().includes(search)) ||
-                            (item.empresa && item.empresa.toLowerCase().includes(search));
+                            (item.empresa && item.empresa.toLowerCase().includes(search)) ||
+                            (item.celular && item.celular.toLowerCase().includes(search)) ||
+                            (item.especialidad && item.especialidad.toLowerCase().includes(search));
         if (!matchSearch) return false;
       }
 

@@ -1,8 +1,6 @@
-
 /* ============================================
    CONTENIDO PRINCIPAL
    ============================================ */
-
 
 @media only screen and (min-width: 992px) {
   #principal {
@@ -24,22 +22,20 @@
 
 /* Contenedor de registro */
 #registro {
-  background-color: #f0f0f0;
-  border: 2px solid #fff;
+  background-color: var(--rojo);
+  color: #fff;
   padding: 2rem;
   border-radius: 1.5rem;
-  box-shadow: 0 0.5rem 1.5rem 0.2rem rgba(0,0,0,0.251);
-  color: #464646;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  -webkit-margin-after: 1rem;
-          margin-block-end: 1rem;
+  gap: 1.5rem;
+  margin-block-end: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 @media only screen and (min-width: 768px) {
   #registro {
-    padding: 2rem 4rem;
+    padding: 2.5rem;
   }
 }
 
@@ -47,7 +43,9 @@
   #registro {
     grid-area: registro;
     align-self: start;
-    padding: 2rem 3rem;
+    padding: 2.5rem 3rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 }
 
@@ -56,6 +54,7 @@
   text-wrap: balance;
   text-align: center;
   margin: 0;
+  line-height: 1.6;
 }
 
 @media only screen and (min-width: 992px) {
@@ -67,14 +66,16 @@
 
 #registro .nota {
   font-size: 1rem;
-  color: #666;
+  color: rgba(255, 255, 255, 0.8);
   text-align: center;
   text-wrap: balance;
+  font-style: italic;
+  margin-top: 0.5rem;
 }
 
 @media only screen and (min-width: 992px) {
   #registro .nota {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     text-align: left;
   }
 }
@@ -86,7 +87,7 @@
 #datos {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 #datos .campo {
@@ -99,46 +100,126 @@
 #datos .icono {
   position: absolute;
   top: 50%;
-  left: 1rem;
+  left: 1.25rem;
   transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+#datos .campo:focus-within .icono {
+  opacity: 1;
 }
 
 #datos input {
   width: 100%;
-  padding: 1rem 1.5rem 1rem 3.5rem;
-  border: 1px solid #ddd;
+  padding: 1rem 1.5rem 1rem 4rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 1rem;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 300;
+  color: #333;
+  background-color: #fff;
   outline: none;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#datos input::placeholder {
+  color: #999;
+  font-weight: 300;
 }
 
 #datos input:focus {
-  border-color: #e63939;
-  box-shadow: 0 0 0 3px rgba(230,57,57,0.1);
+  border-color: var(--azul);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+  transform: translateY(-2px);
 }
 
+#datos input:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+#datos input:-webkit-autofill,
+#datos input:-webkit-autofill:hover,
+#datos input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #333 !important;
+}
+
+/* Boton de registro */
 #datos button {
   width: 100%;
   background-color: var(--azul);
   color: #fff;
   border: none;
-  padding: 0.5em;
-  font-size: 1.5rem;
-  font-weight: normal;
+  padding: 1rem 1.5rem;
+  font-size: 1.35rem;
+  font-weight: 600;
   line-height: 1;
   border-radius: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+#datos button:hover {
+  background-color: var(--azul-oscuro, #2557c3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+}
+
+#datos button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+#datos button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.4);
 }
 
 /* Mensajes de error */
 .error-message {
-  color: #2563eb;
-  font-size: 0.85rem;
+  color: #d97706;
+  font-size: 0.95rem;
   margin-top: 0.25rem;
+  padding-left: 3.5rem;
   display: none;
+  animation: shake 0.4s ease-in-out;
+}
+
+.error-message.visible {
+  display: block;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-3px); }
+  40%, 80% { transform: translateX(3px); }
+}
+
+/* Campo con error */
+#datos .campo.error input {
+  border-color: #d97706 !important;
+  background-color: #fef2f2;
+}
+
+#datos .campo.error .icono {
+  opacity: 1;
+  filter: brightness(0.8);
+}
+
+#datos .campo.valid input {
+  border-color: #22c55e !important;
+}
+
+#datos .campo.valid .icono {
+  opacity: 1;
+  filter: none;
 }
 
 /* ============================================
@@ -147,27 +228,145 @@
 
 #qr-success {
   text-align: center;
-  padding: 1rem 0;
+  padding: 2rem 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  backdrop-filter: blur(5px);
 }
 
 #qr-success img {
   max-width: 400px;
   width: 100%;
-  border: 2px solid #eee;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   padding: 15px;
   border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 #qr-success button {
+  margin-top: 1.5rem;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 2rem;
   border-radius: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
   font-weight: bold;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 #qr-success button:hover {
   opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Estilos para la transicion de exeito */
+#qr-success {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media only screen and (max-width: 767px) {
+  #principal {
+    padding: 1rem;
+  }
+
+  #registro {
+    padding: 1.5rem;
+  }
+
+  #datos input {
+    font-size: 1.1rem;
+    padding: 0.9rem 1.25rem 0.9rem 3.75rem;
+  }
+
+  #datos button {
+    font-size: 1.2rem;
+    padding: 0.9rem 1.25rem;
+  }
+
+  #registro .nota {
+    font-size: 0.9rem;
+  }
+}
+
+/* Focus visible para accesibilidad */
+#datos input:focus-visible,
+#datos button:focus-visible {
+  outline: 2px solid var(--azul);
+  outline-offset: 2px;
+}
+
+/* Estilo para el logo en el formulario */
+#titular {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media only screen and (min-width: 992px) {
+  #titular {
+    grid-area: titular;
+    align-items: flex-start;
+  }
+}
+
+#titular .logo-deferol {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+}
+
+#titular .logos-bajos {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  opacity: 0.8;
+}
+
+@media only screen and (min-width: 992px) {
+  #titular .logos-bajos {
+    max-width: 250px;
+  }
+}
+
+/* Animacion de carga para el boton */
+#datos button.loading {
+  position: relative;
+  color: transparent;
+}
+
+#datos button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
