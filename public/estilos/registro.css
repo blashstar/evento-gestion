@@ -277,7 +277,7 @@ body {
   height: 1.25rem;
   border: 2px solid rgba(255, 255, 255, 0.6);
   border-radius: 0.25rem;
-  background-color: transparent;
+  background-color: white;
   transition: all 0.2s ease;
   margin-top: 0.1rem;
 }
@@ -322,7 +322,7 @@ body {
 
 .campo-checkbox .mensaje {
   font-size: 0.85rem;
-  color: #d97706;
+  color: #CCC;
   min-height: 1.2rem;
 }
 
