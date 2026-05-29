@@ -49,9 +49,7 @@ class QrValidationService {
     this.configurarEventos();
   }
 
-/**
-   * Inicializa el escáner QR (SRP: única responsabilidad)
-   */
+  /**
    * Inicializa el escáner QR (SRP: única responsabilidad)
    */
   inicializarEscaneo() {
