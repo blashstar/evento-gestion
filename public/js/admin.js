@@ -668,7 +668,26 @@ function debounceSearch(_value) {
  * Mostrar sección
  */
 function showSection(section) {
-  console.log('Sección:', section);
+  // Ocultar todas las secciones
+  document.querySelectorAll('.is-main-section').forEach(el => {
+    el.classList.add('is-hidden');
+  });
+
+  // Mostrar la sección seleccionada
+  const target = document.getElementById('section-' + section);
+  if (target) {
+    target.classList.remove('is-hidden');
+  }
+
+  // Actualizar breadcrumb y título
+  const titles = {
+    asistentes: 'Lista de Asistentes',
+    enlaces: 'Enlaces del Evento'
+  };
+  const breadcrumb = document.getElementById('breadcrumb-active');
+  const heroTitle = document.getElementById('hero-title');
+  if (breadcrumb) breadcrumb.textContent = titles[section] || section;
+  if (heroTitle) heroTitle.textContent = titles[section] || section;
 }
 
 /**
@@ -720,6 +739,28 @@ document.addEventListener('click', function(e) {
   // Refresh button
   if (e.target.closest('#btn-refresh') || e.target.closest('.jb-refresh-icon')) {
     loadAsistentes();
+    return;
+  }
+
+  // Copy link buttons
+  const copyBtn = e.target.closest('.jb-copy-link');
+  if (copyBtn) {
+    const targetId = copyBtn.dataset.target;
+    const urlEl = document.getElementById(targetId);
+    if (urlEl) {
+      const fullUrl = window.location.origin + urlEl.textContent.trim();
+      navigator.clipboard.writeText(fullUrl).then(() => {
+        const originalHtml = copyBtn.innerHTML;
+        copyBtn.classList.add('is-copied');
+        copyBtn.innerHTML = '<span class="icon"><i class="mdi mdi-check"></i></span><span>Copiado</span>';
+        setTimeout(() => {
+          copyBtn.classList.remove('is-copied');
+          copyBtn.innerHTML = originalHtml;
+        }, 2000);
+      }).catch(err => {
+        console.error('Error al copiar:', err);
+      });
+    }
     return;
   }
 

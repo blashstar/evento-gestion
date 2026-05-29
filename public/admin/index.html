@@ -157,6 +157,56 @@
     .loading-overlay.is-hidden {
       display: none;
     }
+
+    /* Links section styles */
+    .links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .link-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border: 1px solid #e9ecef;
+      transition: background 0.2s ease;
+    }
+
+    .link-row:hover {
+      background: #e9ecef;
+    }
+
+    .link-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .link-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .link-text strong {
+      font-size: 1rem;
+      color: #363636;
+    }
+
+    .link-url {
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .jb-copy-link.is-copied {
+      background-color: #48c774;
+      border-color: #48c774;
+      color: white;
+    }
     
     /* Avatarcircle */
     .is-user-avatar .jb-avatar-span {
@@ -220,6 +270,12 @@
               <span class="menu-item-label">Asistentes</span>
             </a>
           </li>
+          <li>
+            <a href="#" class="has-icon jb-menu-item" data-section="enlaces">
+              <span class="icon"><i class="mdi mdi-link-variant"></i></span>
+              <span class="menu-item-label">Enlaces</span>
+            </a>
+          </li>
         </ul>
         <p class="menu-label">Sistema</p>
         <ul class="menu-list">
@@ -240,7 +296,7 @@
           <div class="level-item">
             <ul>
               <li>Admin</li>
-              <li>Asistentes</li>
+              <li id="breadcrumb-active">Asistentes</li>
             </ul>
           </div>
         </div>
@@ -253,15 +309,15 @@
         <div class="level">
           <div class="level-left">
             <div class="level-item">
-              <h1 class="title">Lista de Asistentes</h1>
+              <h1 class="title" id="hero-title">Lista de Asistentes</h1>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Main Section -->
-    <section class="section is-main-section">
+    <!-- Main Section: Asistentes -->
+    <section class="section is-main-section" id="section-asistentes">
       <!-- Loading Overlay -->
       <div class="loading-overlay is-hidden" id="loading">
         <div class="text-center">
@@ -367,6 +423,50 @@
         <div class="card-content">
           <div class="table-container">
             <div id="asistentes-table"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </section>
+
+    <!-- Main Section: Enlaces -->
+    <section class="section is-main-section is-hidden" id="section-enlaces">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            <span class="icon"><i class="mdi mdi-link-variant"></i></span>
+            Enlaces del Evento
+          </p>
+        </header>
+        <div class="card-content">
+          <div class="links-list">
+            <div class="link-row">
+              <div class="link-info">
+                <span class="icon has-text-primary"><i class="mdi mdi-open-in-new"></i></span>
+                <div class="link-text">
+                  <strong>Registro</strong>
+                  <span class="link-url" id="url-registro">/registro</span>
+                </div>
+              </div>
+              <button type="button" class="button is-small is-info jb-copy-link" data-target="url-registro">
+                <span class="icon"><i class="mdi mdi-content-copy"></i></span>
+                <span>Copiar</span>
+              </button>
+            </div>
+            <div class="link-row">
+              <div class="link-info">
+                <span class="icon has-text-primary"><i class="mdi mdi-qrcode-scan"></i></span>
+                <div class="link-text">
+                  <strong>Validación QR</strong>
+                  <span class="link-url" id="url-validacion">/validacion</span>
+                </div>
+              </div>
+              <button type="button" class="button is-small is-info jb-copy-link" data-target="url-validacion">
+                <span class="icon"><i class="mdi mdi-content-copy"></i></span>
+                <span>Copiar</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
