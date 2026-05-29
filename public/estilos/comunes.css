@@ -7,8 +7,8 @@
 
 /* Variables globales */
 :root {
-  --azul: #2563eb;
-  --azul-oscuro: #1e40af;
+  --rojo: #A70000;
+  --rojo-oscuro: #A70000;
 }
 
 /* ============================================
@@ -22,14 +22,13 @@ body {
 }
 
 #pagina {
-  background-color: var(--azul);
+  background-color: var(--rojo);
   color: #fff;
   min-height: 100vh;
   padding: 0;
-  background-image: url("/img/trama.png");
-  background-position: center bottom;
-  background-repeat: repeat-x;
-  background-size: auto 25%;
+  background-image: url("/img/fondo_movil.png");
+  background-size: cover;
+  background-position: top center;
   display: flex;
   flex-direction: column;
 }
@@ -39,7 +38,7 @@ body {
    ============================================ */
 
 .capsula {
-  color: var(--azul);
+  color: var(--rojo);
   background-color: #fff;
   display: inline-block;
   line-height: 0.9;
@@ -108,7 +107,7 @@ body {
    ============================================ */
 
 #principal {
-  padding: 1rem 2rem 4rem;
+  padding: 3rem 2rem 0;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -130,8 +129,20 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 0;
   text-align: center;
+
+  img {
+    max-width: 100%;
+  }
+
+  .logo-deferol {
+    width: 50%;
+  }
+
+  .logos-bajos {
+    width: 80%;
+  }
 }
 
 @media only screen and (min-width: 992px) {
@@ -245,7 +256,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: var(--azul-oscuro);
+  background-color: var(--rojo-oscuro);
   padding: 1.5rem 2rem;
   gap: 1.5rem;
 }

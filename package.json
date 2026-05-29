@@ -36,7 +36,7 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3",
-    "nodemailer": "^6.9.15",
+    "nodemailer": "^8.0.10",
     "qrcode": "^1.5.4",
     "sequelize": "^6.37.3",
     "umzug": "^3.8.2",

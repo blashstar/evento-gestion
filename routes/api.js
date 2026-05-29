@@ -12,26 +12,21 @@ const router = express.Router();
  * Registra un nuevo asistente al evento
  */
 router.post('/registro', [
-  body('nombres')
+  body('nombre')
     .trim()
-    .notEmpty().withMessage('Nombres es requerido')
-    .isLength({ min: 2, max: 100 }).withMessage('Nombres debe tener entre 2 y 100 caracteres')
+    .notEmpty().withMessage('Nombre es requerido')
+    .isLength({ min: 2, max: 100 }).withMessage('Nombre debe tener entre 2 y 100 caracteres')
     .custom((value) => {
       if (!/^[\p{L}\s]+$/u.test(value)) {
-        throw new Error('Nombres solo puede contener letras y espacios');
+        throw new Error('Nombre solo puede contener letras y espacios');
       }
       return true;
     }),
-  body('apellidos')
+  body('celular')
     .trim()
-    .notEmpty().withMessage('Apellidos es requerido')
-    .isLength({ min: 2, max: 100 }).withMessage('Apellidos debe tener entre 2 y 100 caracteres')
-    .custom((value) => {
-      if (!/^[\p{L}\s]+$/u.test(value)) {
-        throw new Error('Apellidos solo puede contener letras y espacios');
-      }
-      return true;
-    }),
+    .notEmpty().withMessage('Celular es requerido')
+    .isLength({ min: 7, max: 20 }).withMessage('Celular debe tener entre 7 y 20 caracteres')
+    .isNumeric().withMessage('Celular debe contener solo números'),
   body('correo')
     .trim()
     .notEmpty().withMessage('Correo es requerido')
@@ -40,7 +35,11 @@ router.post('/registro', [
   body('empresa')
     .trim()
     .notEmpty().withMessage('Empresa es requerida')
-    .isLength({ min: 2, max: 200 }).withMessage('Empresa debe tener entre 2 y 200 caracteres')
+    .isLength({ min: 2, max: 200 }).withMessage('Empresa debe tener entre 2 y 200 caracteres'),
+  body('especialidad')
+    .trim()
+    .notEmpty().withMessage('Especialidad es requerida')
+    .isLength({ min: 2, max: 100 }).withMessage('Especialidad debe tener entre 2 y 100 caracteres')
 ], async (req, res) => {
   try {
     const errores = validationResult(req);
@@ -54,7 +53,7 @@ router.post('/registro', [
       });
     }
 
-    const { nombres, apellidos, correo, empresa } = req.body;
+    const { nombre, celular, correo, empresa, especialidad } = req.body;
 
     const existente = await Asistente.findOne({ where: { correo } });
     if (existente) {
@@ -71,21 +70,24 @@ router.post('/registro', [
     const qrDataUrl = await QRCode.toDataURL(tokenValidacion);
 
     const asistente = await Asistente.create({
-      nombres,
-      apellidos,
+      nombre,
+      celular,
       correo,
       empresa,
+      especialidad,
       token_validacion: tokenValidacion,
       qr_codigo: qrDataUrl
     });
 
     try {
       await emailService.enviarQR({
-        nombres: asistente.nombres,
-        apellidos: asistente.apellidos,
+        nombre: asistente.nombre,
         correo: asistente.correo,
         qrDataUrl: qrDataUrl,
-        tokenValidacion: tokenValidacion
+        tokenValidacion: tokenValidacion,
+        celular: asistente.celular,
+        empresa: asistente.empresa,
+        especialidad: asistente.especialidad
       });
     } catch (emailError) {
       console.error('Error al enviar correo:', emailError);
@@ -96,10 +98,11 @@ router.post('/registro', [
       mensaje: 'Registro exitoso. Se ha enviado un correo con tu código QR.',
       data: {
         id: asistente.id,
-        nombres: asistente.nombres,
-        apellidos: asistente.apellidos,
+        nombre: asistente.nombre,
+        celular: asistente.celular,
         correo: asistente.correo,
         empresa: asistente.empresa,
+        especialidad: asistente.especialidad,
         qrCodigo: qrDataUrl,
         estado: asistente.estado
       }
@@ -142,10 +145,11 @@ router.get('/validar/:token', async (req, res) => {
       success: true,
       mensaje: 'Correo validado exitosamente',
       data: {
-        nombres: asistente.nombres,
-        apellidos: asistente.apellidos,
+        nombre: asistente.nombre,
+        celular: asistente.celular,
         correo: asistente.correo,
         empresa: asistente.empresa,
+        especialidad: asistente.especialidad,
         estado: asistente.estado
       }
     });
@@ -169,7 +173,7 @@ router.post('/ingreso', async (req, res) => {
     const { token } = req.body;
 
     // Validar que sea un UUID valido
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!token || !uuidRegex.test(token)) {
       return res.status(400).json({
         success: false,
@@ -195,9 +199,10 @@ router.post('/ingreso', async (req, res) => {
         error: 'Este asistente YA INGRESO al evento',
         data: {
           uuid: asistente.token_validacion,
-          nombres: asistente.nombres,
-          apellidos: asistente.apellidos,
+          nombre: asistente.nombre,
+          celular: asistente.celular,
           empresa: asistente.empresa,
+          especialidad: asistente.especialidad,
           fechaIngreso: asistente.fecha_ingreso
         }
       });
@@ -213,9 +218,10 @@ router.post('/ingreso', async (req, res) => {
       mensaje: 'Ingreso registrado exitosamente',
       data: {
         uuid: asistente.token_validacion,
-        nombres: asistente.nombres,
-        apellidos: asistente.apellidos,
+        nombre: asistente.nombre,
+        celular: asistente.celular,
         empresa: asistente.empresa,
+        especialidad: asistente.especialidad,
         estado: asistente.estado,
         fechaIngreso: asistente.fecha_ingreso
       }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0066)https://cdpn.io/pen/debug/dPpmadQ/a04dd4f7852a7c779969fae5b43a935d -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
   <title>Registro Deferol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,50 +11,39 @@
 
 
 
-
 <script src="/js/registro.js" defer></script></head>
 
 <body>
   <div id="pagina">
-  <header id="encabezado"><img class="logo" src="/img/marca-logo.png"></header>
   <main id="principal">
     <hgroup id="titular">
-      <div class="capsula">EVENTO</div>
-      <h1>Lanzamiento del <strong>Asistente Virtual</strong> de Viajes con IA</h1>
-      <p>Una herramienta innovadora de <strong>Deferol</strong> para descubrir el Perú con itinerarios personalizados.</p>
+      <img class="logo-deferol" src="/img/deferol.png" alt="deferol">
+      <img class="logos-bajos" src="/img/logos_bajos.png" alt="">
     </hgroup>
     <aside id="registro">
       <p>Completa tus datos para registrarte en el evento y para recibir tu entrada QR.</p>
       <form id="datos">
-        <div class="campo"><img class="icono" src="/img/usuario.png">
-          <input type="text" name="nombres" placeholder="Nombres" required="required">
+        <div class="campo"><img class="icono" src="/img/usuario.png" alt="Icono usuario">
+          <input type="text" name="nombre" placeholder="Nombre completo" required="required">
         </div>
-        <div class="campo"><img class="icono" src="/img/usuario.png">
-          <input type="text" name="apellidos" placeholder="Apellidos" required="required">
+        <div class="campo"><img class="icono" src="/img/telefono.png" alt="Icono teléfono">
+          <input type="tel" name="celular" placeholder="Celular" required="required">
         </div>
-        <div class="campo"><img class="icono" src="/img/correo.png">
-          <input type="email" name="correo" placeholder="Correo" required="required">
+        <div class="campo"><img class="icono" src="/img/correo.png" alt="Icono correo">
+          <input type="email" name="correo" placeholder="Correo electrónico" required="required">
         </div>
-        <div class="campo"><img class="icono" src="/img/empresa.png">
+        <div class="campo"><img class="icono" src="/img/empresa.png" alt="Icono empresa">
           <input type="text" name="empresa" placeholder="Empresa / Institución" required="required">
+        </div>
+        <div class="campo"><img class="icono" src="/img/empresa.png" alt="Icono especialidad">
+          <input type="text" name="especialidad" placeholder="Especialidad" required="required">
         </div>
         <button type="submit">Registrarme</button>
       </form>
       <div class="nota">*Se enviará un código QR para que puedas ingresar al evento.</div>
     </aside>
-    <article id="info">
-      <div class="capsula">Te esperamos en:</div>
-      <div class="item"><img class="icono" src="/img/lugar.png"><strong>Museo Larco Herrera</strong></div>
-      <div class="item"><img class="icono" src="/img/fecha.png"><span>7 de Abril de 2026</span></div>
-      <div class="item"><img class="icono" src="/img/hora.png"><span>9:30 - 11:30 AM</span></div>
-    </article>
   </main>
-  <footer id="pie"><img class="deferol" src="/img/deferol-logo.png">
-    <p>Deferol - Soluciones Digitales</p>
-  </footer>
 </div>
-
-
 
 
 

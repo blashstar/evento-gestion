@@ -7,12 +7,12 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
-      nombres: {
+      nombre: {
         type: Sequelize.STRING(100),
         allowNull: false
       },
-      apellidos: {
-        type: Sequelize.STRING(100),
+      celular: {
+        type: Sequelize.STRING(20),
         allowNull: false
       },
       correo: {
@@ -22,6 +22,10 @@ module.exports = {
       },
       empresa: {
         type: Sequelize.STRING(200),
+        allowNull: false
+      },
+      especialidad: {
+        type: Sequelize.STRING(100),
         allowNull: false
       },
       token_validacion: {

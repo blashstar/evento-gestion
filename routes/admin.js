@@ -123,10 +123,11 @@ router.get('/asistentes', verificarToken, async (req, res) => {
 
     if (busqueda) {
       where[Op.or] = [
-        { nombres: { [Op.like]: `%${busqueda}%` } },
-        { apellidos: { [Op.like]: `%${busqueda}%` } },
+        { nombre: { [Op.like]: `%${busqueda}%` } },
         { correo: { [Op.like]: `%${busqueda}%` } },
-        { empresa: { [Op.like]: `%${busqueda}%` } }
+        { empresa: { [Op.like]: `%${busqueda}%` } },
+        { especialidad: { [Op.like]: `%${busqueda}%` } },
+        { celular: { [Op.like]: `%${busqueda}%` } }
       ];
     }
 
@@ -136,7 +137,7 @@ router.get('/asistentes', verificarToken, async (req, res) => {
     // Obtener asistentes con paginación
     const asistentes = await Asistente.findAll({
       where,
-      attributes: ['id', 'nombres', 'apellidos', 'correo', 'empresa', 'estado', 'fecha_registro', 'fecha_ingreso'],
+      attributes: ['id', 'nombre', 'celular', 'correo', 'empresa', 'especialidad', 'estado', 'fecha_registro', 'fecha_ingreso'],
       order: [['fecha_registro', 'DESC']],
       limit: parseInt(limit),
       offset: parseInt(offset)
@@ -154,13 +155,13 @@ router.get('/asistentes', verificarToken, async (req, res) => {
     const estados = {
       pendiente: 0,
       validado: 0,
-      ingreso: 0
+      ingresados: 0
     };
 
     stats.forEach(s => {
       if (s.estado === 'pendiente') estados.pendiente = parseInt(s.dataValues.total);
       if (s.estado === 'validado') estados.validado = parseInt(s.dataValues.total);
-      if (s.estado === 'ingresado') estados.ingreso = parseInt(s.dataValues.total);
+      if (s.estado === 'ingresado') estados.ingresados = parseInt(s.dataValues.total);
     });
 
     res.json({
@@ -176,7 +177,7 @@ router.get('/asistentes', verificarToken, async (req, res) => {
           total: total,
           pendientes: estados.pendiente,
           validados: estados.validado,
-          ingresados: estados.ingreso
+          ingresados: estados.ingresados
         }
       }
     });
@@ -198,7 +199,7 @@ router.get('/asistentes/:id', verificarToken, async (req, res) => {
     const { id } = req.params;
 
     const asistente = await Asistente.findByPk(id, {
-      attributes: ['id', 'nombres', 'apellidos', 'correo', 'empresa', 'estado', 'token_validacion', 'qr_codigo', 'fecha_registro', 'fecha_ingreso']
+      attributes: ['id', 'nombre', 'celular', 'correo', 'empresa', 'especialidad', 'estado', 'token_validacion', 'qr_codigo', 'fecha_registro', 'fecha_ingreso']
     });
 
     if (!asistente) {
@@ -246,7 +247,7 @@ router.get('/estadisticas', verificarToken, async (req, res) => {
 
     // Obtener últimos registros
     const recientes = await Asistente.findAll({
-      attributes: ['id', 'nombres', 'apellidos', 'estado', 'fecha_registro'],
+      attributes: ['id', 'nombre', 'estado', 'fecha_registro'],
       order: [['fecha_registro', 'DESC']],
       limit: 5
     });
@@ -334,17 +335,18 @@ router.get('/asistentes/exportar', verificarToken, async (req, res) => {
     
     // Obtener todos los asistentes
     const asistentes = await Asistente.findAll({
-      attributes: ['id', 'nombres', 'apellidos', 'correo', 'empresa', 'estado', 'fecha_registro', 'fecha_ingreso'],
+      attributes: ['id', 'nombre', 'celular', 'correo', 'empresa', 'especialidad', 'estado', 'fecha_registro', 'fecha_ingreso'],
       order: [['fecha_registro', 'DESC']]
     });
     
     // Transformar datos para Excel
     const data = asistentes.map(a => ({
       'ID': a.id,
-      'Nombres': a.nombres,
-      'Apellidos': a.apellidos,
+      'Nombre': a.nombre,
+      'Celular': a.celular,
       'Correo': a.correo,
       'Empresa': a.empresa,
+      'Especialidad': a.especialidad,
       'Estado': a.estado,
       'Fecha de Registro': a.fecha_registro ? new Date(a.fecha_registro).toLocaleString('es-PE') : '',
       'Fecha de Ingreso': a.fecha_ingreso ? new Date(a.fecha_ingreso).toLocaleString('es-PE') : ''
@@ -356,11 +358,12 @@ router.get('/asistentes/exportar', verificarToken, async (req, res) => {
     
     // Ajustar ancho de columnas
     const cols = [
-      { wch: 5 },  // ID
-      { wch: 25 }, // Nombres
-      { wch: 25 }, // Apellidos
+      { wch: 5 },   // ID
+      { wch: 25 }, // Nombre
+      { wch: 15 }, // Celular
       { wch: 35 }, // Correo
       { wch: 30 }, // Empresa
+      { wch: 20 }, // Especialidad
       { wch: 12 }, // Estado
       { wch: 20 }, // Fecha Registro
       { wch: 20 }  // Fecha Ingreso
@@ -412,11 +415,13 @@ router.post('/asistentes/:id/enviar-qr', verificarToken, async (req, res) => {
     
     // Enviar correo con QR
     await emailService.enviarQR({
-      nombres: asistente.nombres,
-      apellidos: asistente.apellidos,
+      nombre: asistente.nombre,
       correo: asistente.correo,
       qrDataUrl: asistente.qr_codigo,
-      tokenValidacion: asistente.token_validacion
+      tokenValidacion: asistente.token_validacion,
+      celular: asistente.celular,
+      empresa: asistente.empresa,
+      especialidad: asistente.especialidad
     });
     
     res.json({

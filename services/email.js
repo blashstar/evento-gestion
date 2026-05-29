@@ -20,13 +20,15 @@ class EmailService {
   /**
    * Envía el código QR al asistente registrado
    * @param {Object} params - Parámetros del correo
-   * @param {string} params.nombres - Nombres del asistente
-   * @param {string} params.apellidos - Apellidos del asistente
+   * @param {string} params.nombre - Nombre completo del asistente
    * @param {string} params.correo - Correo del destinatario
    * @param {string} params.qrDataUrl - QR en formato data URL
    * @param {string} params.tokenValidacion - Token de validación
+   * @param {string} params.celular - Celular del asistente
+   * @param {string} params.empresa - Empresa del asistente
+   * @param {string} params.especialidad - Especialidad del asistente
    */
-  async enviarQR({ nombres, apellidos, correo, qrDataUrl, _tokenValidacion }) {
+  async enviarQR({ nombre, correo, qrDataUrl, _tokenValidacion, celular, empresa, especialidad }) {
     // Convertir data URL a Buffer para adjuntar como imagen
     const base64Data = qrDataUrl.replace(/^data:image\/png;base64,/, '');
     const qrBuffer = Buffer.from(base64Data, 'base64');
@@ -57,7 +59,7 @@ class EmailService {
             <p>Confirmación de Registro al Evento</p>
           </div>
 
-          <p>Hola <strong>${nombres} ${apellidos}</strong>,</p>
+          <p>Hola <strong>${nombre}</strong>,</p>
 
           <p>¡Gracias por registrarte! Tu registro ha sido exitoso. A continuación encontrarás tu código QR de acceso:</p>
 
@@ -66,8 +68,11 @@ class EmailService {
           </div>
 
           <div class="info">
-            <p><strong>Nombre:</strong> ${nombres} ${apellidos}</p>
+            <p><strong>Nombre:</strong> ${nombre}</p>
+            <p><strong>Celular:</strong> ${celular || 'No especificado'}</p>
             <p><strong>Correo:</strong> ${correo}</p>
+            <p><strong>Empresa:</strong> ${empresa || 'No especificada'}</p>
+            <p><strong>Especialidad:</strong> ${especialidad || 'No especificada'}</p>
             <p><strong>Estado:</strong> Registro confirmado</p>
           </div>
 

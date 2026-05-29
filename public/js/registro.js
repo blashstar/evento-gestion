@@ -6,28 +6,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Validation rules matching Asistente model constraints
   const validators = {
-    nombres: {
+    nombre: {
       required: true,
       minLength: 2,
       maxLength: 100,
       pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
       messages: {
-        required: 'Nombres es requerido',
-        minLength: 'Nombres debe tener al menos 2 caracteres',
-        maxLength: 'Nombres no puede exceder 100 caracteres',
-        pattern: 'Nombres solo puede contener letras y espacios'
+        required: 'Nombre es requerido',
+        minLength: 'Nombre debe tener al menos 2 caracteres',
+        maxLength: 'Nombre no puede exceder 100 caracteres',
+        pattern: 'Nombre solo puede contener letras y espacios'
       }
     },
-    apellidos: {
+    celular: {
       required: true,
-      minLength: 2,
-      maxLength: 100,
-      pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
+      minLength: 7,
+      maxLength: 20,
+      pattern: /^[0-9\s\-+]+$/,
       messages: {
-        required: 'Apellidos es requerido',
-        minLength: 'Apellidos debe tener al menos 2 caracteres',
-        maxLength: 'Apellidos no puede exceder 100 caracteres',
-        pattern: 'Apellidos solo puede contener letras y espacios'
+        required: 'Celular es requerido',
+        minLength: 'Celular debe tener al menos 7 caracteres',
+        maxLength: 'Celular no puede exceder 20 caracteres',
+        pattern: 'Celular debe contener solo números'
       }
     },
     correo: {
@@ -46,6 +46,16 @@ document.addEventListener('DOMContentLoaded', function() {
         required: 'Empresa es requerida',
         minLength: 'Empresa debe tener al menos 2 caracteres',
         maxLength: 'Empresa no puede exceder 200 caracteres'
+      }
+    },
+    especialidad: {
+      required: true,
+      minLength: 2,
+      maxLength: 100,
+      messages: {
+        required: 'Especialidad es requerida',
+        minLength: 'Especialidad debe tener al menos 2 caracteres',
+        maxLength: 'Especialidad no puede exceder 100 caracteres'
       }
     }
   };
@@ -145,10 +155,11 @@ document.addEventListener('DOMContentLoaded', function() {
     submitBtn.textContent = 'Registrando...';
 
     const formData = {
-      nombres: form.querySelector('[name="nombres"]').value.trim(),
-      apellidos: form.querySelector('[name="apellidos"]').value.trim(),
+      nombre: form.querySelector('[name="nombre"]').value.trim(),
+      celular: form.querySelector('[name="celular"]').value.trim(),
       correo: form.querySelector('[name="correo"]').value.trim().toLowerCase(),
-      empresa: form.querySelector('[name="empresa"]').value.trim()
+      empresa: form.querySelector('[name="empresa"]').value.trim(),
+      especialidad: form.querySelector('[name="especialidad"]').value.trim()
     };
 
     try {
@@ -199,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
     qrSection.innerHTML = `
       <div style="background: #fff; border-radius: 1rem; padding: 2rem; box-shadow: 0 0.5rem 1.5rem 0.2rem rgba(0,0,0,0.1);">
         <h2 style="color: #2563eb; margin: 0 0 1rem; font-size: 1.5rem;">¡Registro Exitoso!</h2>
-        <p style="color: #666; margin: 0 0 0.5rem;">${data.nombres} ${data.apellidos}</p>
+        <p style="color: #666; margin: 0 0 0.5rem;">${data.nombre}</p>
         <p style="color: #666; margin: 0 0 1.5rem; font-size: 0.9rem; text-align: center;">${data.correo}</p>
         <div style="margin: 1.5rem auto; display: block;">
           <img id="qr-image" src="${data.qrCodigo}" alt="Código QR de acceso" style="width: 70%; display: block; margin: 0 auto; border: 2px solid #eee; padding: 10px; border-radius: 8px;">

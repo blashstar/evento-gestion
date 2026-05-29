@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 const validator = require('validator');
 
 module.exports = (sequelize, DataTypes) => {
@@ -8,25 +8,29 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    nombres: {
+    nombre: {
       type: DataTypes.STRING(100),
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'Nombres es requerido'
+          msg: 'Nombre es requerido'
         },
         len: {
           args: [2, 100],
-          msg: 'Nombres debe tener entre 2 y 100 caracteres'
+          msg: 'Nombre debe tener entre 2 y 100 caracteres'
         }
       }
     },
-    apellidos: {
-      type: DataTypes.STRING(100),
+    celular: {
+      type: DataTypes.STRING(20),
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'Apellidos es requerido'
+          msg: 'Celular es requerido'
+        },
+        len: {
+          args: [7, 20],
+          msg: 'Celular debe tener entre 7 y 20 caracteres'
         }
       }
     },
@@ -49,6 +53,15 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           msg: 'Empresa es requerida'
+        }
+      }
+    },
+    especialidad: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Especialidad es requerida'
         }
       }
     },
