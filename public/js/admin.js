@@ -850,7 +850,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Inicializar URLs completas en sección de enlaces
   document.querySelectorAll('.link-url').forEach(el => {
-    const path = el.textContent.trim();
+    const path = el.dataset.path;
     if (path) {
       el.textContent = window.location.origin + path;
     }
